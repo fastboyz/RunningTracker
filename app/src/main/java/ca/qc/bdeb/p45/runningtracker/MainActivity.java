@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity
         nbp = (NumberProgressBar) findViewById(R.id.MainActivity_progess);
 
         nbp.setMax(100);
-        nbp.setProgress(87);
+        nbp.setProgress(25);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
