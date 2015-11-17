@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/MainActivity_content"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/tools"
-    android:layout_centerHorizontal="true"
-    android:layout_centerInParent="true"
-    android:layout_centerVertical="true"
-    app:layout_collapseMode="parallax">
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/activity_vertical_marginQuarter"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MainActivity"
+    tools:showIn="@layout/app_bar_main"
+    android:backgroundTint="@color/common_google_signin_btn_text_dark">
 
     <TextView
         android:id="@+id/MainActivity_traveled"
@@ -15,10 +18,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textAllCaps="true"
-        android:textSize="65sp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
         android:text="@string/Traveled"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAllCaps="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="55sp" />
 
     <TextView
         android:id="@+id/MainActivity_objective"
@@ -26,31 +31,46 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/MainActivity_traveled"
         android:layout_centerHorizontal="true"
-        android:textAllCaps="true"
-        android:textSize="20sp"
+        android:layout_marginBottom="8dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
         android:text="@string/Objective"
+        android:textAllCaps="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_marginBottom="8dp"/>
+        android:textSize="20sp" />
 
     <com.daimajia.numberprogressbar.NumberProgressBar
-        android:layout_below="@+id/MainActivity_objective"
+        android:id="@+id/MainActivity_progess"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:id="@+id/MainActivity_progess"
-
-        custom:progress_unreached_color="@color/colorText"
-        custom:progress_reached_color="@color/colorAccent"
-
-        custom:progress_unreached_bar_height="9dp"
-        custom:progress_reached_bar_height="8.25dp"
-
-        custom:progress_text_size="12sp"
-        custom:progress_text_color="@color/colorPrimaryText"
-        custom:progress_text_offset="1dp"
-        custom:progress_text_visibility="visible"
+        android:layout_below="@+id/MainActivity_objective"
         android:layout_marginBottom="8dp"
-        />
 
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        custom:progress_reached_bar_height="2dp"
+
+        custom:progress_reached_color="@color/colorAccent"
+        custom:progress_text_color="@color/colorPrimaryText"
+
+        custom:progress_text_offset="1dp"
+        custom:progress_text_size="12sp"
+        custom:progress_text_visibility="visible"
+        custom:progress_unreached_bar_height="1dp"
+        custom:progress_unreached_color="@color/colorPrimaryLight" />
+
+    <include
+        android:id="@+id/MainActivity_inContent"
+        layout="@layout/content_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/MainActivity_progess" />
+
+    <include
+        layout="@layout/activity_maps"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/MainActivity_inContent"/>
 
 </RelativeLayout>
