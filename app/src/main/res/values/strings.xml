@@ -8,5 +8,11 @@
     <string name="Traveled">5.24 Km</string>
     <string name="Objective">Objective of 6 Km</string>
     <string name="BurnedCalories">Burned Calories</string>
-    <string name="speed">Speed</string>
+    <string name="speed">Speed (Km/h)</string>
+    <string name="speedHolder">7</string>
+    <string name="BurnedCaloriesHolder">168</string>
+    <string name="time">Time (HH:MM)</string>
+    <string name="timeHolder">1:58</string>
+    <string name="podo">Step counter</string>
+    <string name="podoHolder">20258</string>
 </resources>

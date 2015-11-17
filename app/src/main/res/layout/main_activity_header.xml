@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textAllCaps="true"
-        android:textSize="25sp"
+        android:textSize="65sp"
         android:text="@string/Traveled"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -27,8 +27,10 @@
         android:layout_below="@+id/MainActivity_traveled"
         android:layout_centerHorizontal="true"
         android:textAllCaps="true"
+        android:textSize="20sp"
         android:text="@string/Objective"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginBottom="8dp"/>
 
     <com.daimajia.numberprogressbar.NumberProgressBar
         android:layout_below="@+id/MainActivity_objective"
@@ -40,13 +42,14 @@
         custom:progress_unreached_color="@color/colorText"
         custom:progress_reached_color="@color/colorAccent"
 
-        custom:progress_unreached_bar_height="2dp"
-        custom:progress_reached_bar_height="2.75dp"
+        custom:progress_unreached_bar_height="9dp"
+        custom:progress_reached_bar_height="8.25dp"
 
-        custom:progress_text_size="10sp"
+        custom:progress_text_size="12sp"
         custom:progress_text_color="@color/colorPrimaryText"
         custom:progress_text_offset="1dp"
         custom:progress_text_visibility="visible"
+        android:layout_marginBottom="8dp"
         />
 
 
