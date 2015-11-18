@@ -1,5 +1,12 @@
 package ca.qc.bdeb.p45.runningtracker.View;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -113,10 +121,22 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setMyLocationEnabled(true);
 
+        moveCamToLocation(mMap.getMyLocation());
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+//        LatLng sydney = new LatLng(-34, 151);
+//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
+
+    private void moveCamToLocation(Location location) {
+        LatLng position = null;
+        if (location != null) {
+            position = new LatLng(location.getLatitude(), location.getLongitude());
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, 18f));
+        }else{
+            Toast.makeText(MainActivity.this, "GPS Fermer", Toast.LENGTH_SHORT).show();
+        }
     }
 }
