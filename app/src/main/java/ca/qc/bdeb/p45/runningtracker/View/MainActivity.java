@@ -1,4 +1,4 @@
-package ca.qc.bdeb.p45.runningtracker;
+package ca.qc.bdeb.p45.runningtracker.View;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -17,6 +17,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import ca.qc.bdeb.p45.runningtracker.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
