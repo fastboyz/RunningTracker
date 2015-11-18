@@ -122,19 +122,30 @@ public class MainActivity extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setScrollGesturesEnabled(false);
 
-        moveCamToLocation(mMap.getMyLocation());
+        mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+            @Override
+            public void onMyLocationChange(Location location) {
+                moveCamToLocation(mMap.getMyLocation());
+            }
+        });
+
+
         // Add a marker in Sydney and move the camera
 //        LatLng sydney = new LatLng(-34, 151);
 //        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+
+
     }
 
     private void moveCamToLocation(Location location) {
         LatLng position = null;
         if (location != null) {
             position = new LatLng(location.getLatitude(), location.getLongitude());
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, 18f));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, 14.85f));
         }else{
             Toast.makeText(MainActivity.this, "GPS Fermer", Toast.LENGTH_SHORT).show();
         }
