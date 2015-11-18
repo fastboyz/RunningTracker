@@ -1,19 +1,24 @@
 <resources>
     <string name="app_name">Running Tracker</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
-    <string name="Traveled">5.24 Km</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="Traveled" translatable="false">5.24 Km</string>
     <string name="Objective">Objective of 6 Km</string>
-    <string name="BurnedCalories">Burned Calories</string>
-    <string name="speed">Speed (Km/h)</string>
-    <string name="speedHolder">7</string>
-    <string name="BurnedCaloriesHolder">168</string>
-    <string name="time">Time (HH:MM)</string>
-    <string name="timeHolder">1:58</string>
-    <string name="podo">Step counter</string>
-    <string name="podoHolder">20258</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="BurnedCalories">Calorie brulée</string>
+    <string name="speedHolder" translatable="false">7</string>
+    <string name="BurnedCaloriesHolder" translatable="false">168</string>
+    <string name="timeHolder" translatable="false">1:58</string>
+    <string name="podo">Nombre de pas</string>
+    <string name="podoHolder" translatable="false">20258</string>
+    <string name="title_activity_maps" translatable="false">Map</string>
+    <string name="Course">Course</string>
+    <string name="historique">Mon historique</string>
+    <string name="objectif">Mes objectifs</string>
+    <string name="statistiques">Mes Statistiques</string>
+    <string name="speed">Vitesse (Km/h)</string>
+    <string name="time">Temps (HH:MM)</string>
+    <string name="partager">Partager</string>
 </resources>
