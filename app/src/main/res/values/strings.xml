@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Running Tracker</string>
+    <string name="app_name">Run Tracker</string>
 
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
@@ -21,4 +21,6 @@
     <string name="speed">Vitesse (Km/h)</string>
     <string name="time">Temps (HH:MM)</string>
     <string name="partager">Partager</string>
+    <string name="stop">Arreter</string>
+    <string name="start">Démarrer</string>
 </resources>

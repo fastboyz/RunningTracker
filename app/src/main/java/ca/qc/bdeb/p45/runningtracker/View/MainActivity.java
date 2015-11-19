@@ -16,14 +16,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import ca.qc.bdeb.p45.runningtracker.R;
@@ -33,12 +37,13 @@ public class MainActivity extends AppCompatActivity
 
     private NumberProgressBar nbp;
     private GoogleMap mMap;
+    private ToggleButton startStop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
+        initialise();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -121,6 +126,7 @@ public class MainActivity extends AppCompatActivity
         mMap = googleMap;
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setScrollGesturesEnabled(false);
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
         mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
@@ -129,23 +135,38 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
-        // Add a marker in Sydney and move the camera
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
-
-
     }
 
     private void moveCamToLocation(Location location) {
         LatLng position = null;
         if (location != null) {
             position = new LatLng(location.getLatitude(), location.getLongitude());
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, 14.85f));
-        }else{
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, 13.85f));
+        } else {
             Toast.makeText(MainActivity.this, "GPS Fermer", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void initialise() {
+        startStop = (ToggleButton) findViewById(R.id.MainActivity_btnStartStop);
+
+        startStop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            LatLng pos;
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    pos = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation().getLongitude());
+                    mMap.addMarker(new MarkerOptions().position(pos).
+                            icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).
+                            title(getResources().getString(R.string.start)));
+                } else {
+                    pos = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation().getLongitude());
+                    mMap.addMarker(new MarkerOptions().position(pos).
+                            icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                            .title(getResources().getString(R.string.stop)));
+                }
+            }
+        });
     }
 }

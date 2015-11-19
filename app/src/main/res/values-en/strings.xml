@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Run Tracker</string>
+    <string name="BurnedCalories">Burned Calories</string>
+    <string name="Course">Run</string>
+    <string name="action_settings">Settings</string>
+    <string name="historique">History</string>
+    <string name="objectif">My goals</string>
+    <string name="partager">Share</string>
+    <string name="podo">Step count</string>
+    <string name="speed">Speed (Km/h)</string>
+    <string name="statistiques">My stats</string>
+    <string name="time">Time (HH:MM)</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+</resources>
