@@ -66,11 +66,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/MainActivity_progess" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black"
+        android:layout_alignBottom="@+id/MainActivity_inContent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/view" />
+
 
     <include
         layout="@layout/activity_maps"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/MainActivity_inContent"/>
+        android:layout_below="@+id/MainActivity_inContent" />
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/MainActivity_btnStartStop"
+        android:textOn="@string/stop"
+        android:textOff="@string/start"
+        android:layout_below="@+id/view"
+        android:layout_toRightOf="@+id/MainActivity_objective"
+        android:layout_toEndOf="@+id/MainActivity_objective"
+        android:elevation="10dp" />
+
 
 </RelativeLayout>
