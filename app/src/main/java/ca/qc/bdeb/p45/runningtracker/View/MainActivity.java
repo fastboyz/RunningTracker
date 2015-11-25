@@ -3,6 +3,7 @@ package ca.qc.bdeb.p45.runningtracker.View;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Chronometer;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,12 +26,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import java.text.DecimalFormat;
-
 import ca.qc.bdeb.p45.runningtracker.Common.StateCourse;
+import ca.qc.bdeb.p45.runningtracker.Common.Utils;
 import ca.qc.bdeb.p45.runningtracker.Modele.Course;
 import ca.qc.bdeb.p45.runningtracker.R;
 
@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity
     private static LatLng newPos;
     private Course course;
     private TextView distanceVoyager;
+    private Chronometer chronometre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +64,8 @@ public class MainActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -156,6 +158,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initialise() {
+        chronometre = (Chronometer) findViewById(R.id.MainActivity_time);
+        //chronometre.setFormat("MM:SS");
         startStop = (ToggleButton) findViewById(R.id.MainActivity_btnStartStop);
         distanceVoyager = (TextView) findViewById(R.id.MainActivity_traveled);
         distanceVoyager.setText(R.string.distanceVoyagerInitiale);
@@ -165,29 +169,35 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    if (course == null) {
-                        course = new Course();
-                        initialiserCourse();
-                    } else {
-                        //TODO save la course encore en cours
+                    if (course != null) {
+                        //TODO save the current course
                         mMap.clear();
-                        course = new Course();
-                        initialiserCourse();
+                        distanceVoyager.setText(R.string.distanceVoyagerInitiale);
                     }
+                    course = new Course();
+                    chronometre.setBase(SystemClock.elapsedRealtime());
+                    chronometre.start();
+                    initialiserCourse();
                 } else {
-                    pos = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation().getLongitude());
+                    pos = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation()
+                            .getLongitude());
                     mMap.addMarker(new MarkerOptions().position(pos).
-                            icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                            icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory
+                                    .HUE_RED))
                             .title(getResources().getString(R.string.stop)));
                     course.changeState();
+                    chronometre.stop();
+                    course.setTempsEcouler(SystemClock.elapsedRealtime()-chronometre.getBase());
                 }
             }
 
             private void initialiserCourse() {
-                pos = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation().getLongitude());
+                pos = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation()
+                        .getLongitude());
                 lastKnownPos = pos;
                 mMap.addMarker(new MarkerOptions().position(pos).
-                        icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).
+                        icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory
+                                .HUE_GREEN)).
                         title(getResources().getString(R.string.start)));
             }
         });
@@ -196,32 +206,17 @@ public class MainActivity extends AppCompatActivity
     private void drawLine() {
         if (course.getState() != StateCourse.ARRETER) {
             if (lastKnownPos != null) {
-                newPos = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation().getLongitude());
-                PolylineOptions opts = new PolylineOptions().width(5).color(Color.BLUE).add(lastKnownPos).add(newPos);
+                newPos = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation()
+                        .getLongitude());
+                PolylineOptions opts = new PolylineOptions().width(5).color(Color.BLUE)
+                        .add(lastKnownPos).add(newPos);
                 mMap.addPolyline(opts);
-                course.ajouterDistance(calculerDistante());
-                distanceVoyager.setText(String.format("%s%s", formatDecimal(), getString(R.string.unite_distance)));
+                course.ajouterDistance(Utils.getInstance().calculerDistante(lastKnownPos, newPos));
+                distanceVoyager.setText(String.format("%s%s", Utils.getInstance()
+                        .formatDecimal(course), getString(R.string.unite_distance)));
                 lastKnownPos = newPos;
             }
         }
     }
 
-    private double calculerDistante() {
-        Location lastLoc = new Location("");
-        Location newLoc = new Location("");
-        lastLoc.setLatitude(lastKnownPos.latitude);
-        lastLoc.setLongitude(lastKnownPos.longitude);
-        newLoc.setLongitude(newPos.longitude);
-        newLoc.setLatitude(newPos.latitude);
-
-
-        return (double) (lastLoc.distanceTo(newLoc) / 1000);
-    }
-
-    private String formatDecimal(){
-        DecimalFormat format = new DecimalFormat("0.00");
-        String formatted = format.format(course.getDistanteParcourue());
-        return formatted;
-
-    }
 }

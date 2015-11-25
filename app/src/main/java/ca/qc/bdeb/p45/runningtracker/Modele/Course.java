@@ -7,8 +7,16 @@ import ca.qc.bdeb.p45.runningtracker.Common.StateCourse;
  */
 public class Course {
     private double distanteParcourue;
-
     private double tempsEcouler;
+
+    public double getTempsEcouler() {
+        return tempsEcouler;
+    }
+
+    public void setTempsEcouler(double tempsEcouler) {
+
+        this.tempsEcouler = tempsEcouler;
+    }
 
     private StateCourse state;
 
