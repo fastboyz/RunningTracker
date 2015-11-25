@@ -10,7 +10,7 @@
     <string name="podo">Step count</string>
     <string name="speed">Speed (Km/h)</string>
     <string name="statistiques">My stats</string>
-    <string name="time">Time (HH:MM)</string>
+    <string name="time">Time (MM:SS)</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
 </resources>

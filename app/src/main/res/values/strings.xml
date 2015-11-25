@@ -19,8 +19,15 @@
     <string name="objectif">Mes objectifs</string>
     <string name="statistiques">Mes Statistiques</string>
     <string name="speed">Vitesse (Km/h)</string>
-    <string name="time">Temps (HH:MM)</string>
+    <string name="time">Temps (MM:SS)</string>
     <string name="partager">Partager</string>
     <string name="stop">Arreter</string>
     <string name="start">Démarrer</string>
+    <string name="distanceVoyagerInitiale">0 KM</string>
+    <string name="unite_distance">" KM"</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_test">Test</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

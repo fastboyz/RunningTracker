@@ -113,7 +113,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textSize="18sp" />
 
-            <TextView
+            <Chronometer
                 android:id="@+id/MainActivity_time"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
