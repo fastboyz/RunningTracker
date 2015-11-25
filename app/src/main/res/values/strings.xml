@@ -23,4 +23,6 @@
     <string name="partager">Partager</string>
     <string name="stop">Arreter</string>
     <string name="start">Démarrer</string>
+    <string name="distanceVoyagerInitiale">0 KM</string>
+    <string name="unite_distance">" KM"</string>
 </resources>

@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -26,10 +27,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.text.DecimalFormat;
 
+import ca.qc.bdeb.p45.runningtracker.Common.StateCourse;
+import ca.qc.bdeb.p45.runningtracker.Modele.Course;
 import ca.qc.bdeb.p45.runningtracker.R;
 
 public class MainActivity extends AppCompatActivity
@@ -38,9 +39,10 @@ public class MainActivity extends AppCompatActivity
     private NumberProgressBar nbp;
     private GoogleMap mMap;
     private ToggleButton startStop;
-    private Thread getPos;
     private static LatLng lastKnownPos;
     private static LatLng newPos;
+    private Course course;
+    private TextView distanceVoyager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,7 +137,9 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onMyLocationChange(Location location) {
                 moveCamToLocation(mMap.getMyLocation());
-                drawLine();
+                if (course != null) {
+                    drawLine();
+                }
             }
         });
 
@@ -145,7 +149,7 @@ public class MainActivity extends AppCompatActivity
         LatLng position;
         if (location != null) {
             position = new LatLng(location.getLatitude(), location.getLongitude());
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, 13.85f));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, 14.85f));
         } else {
             Toast.makeText(MainActivity.this, "GPS Fermer", Toast.LENGTH_SHORT).show();
         }
@@ -153,52 +157,71 @@ public class MainActivity extends AppCompatActivity
 
     private void initialise() {
         startStop = (ToggleButton) findViewById(R.id.MainActivity_btnStartStop);
-        getPos = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true){
-                    drawLine();
-                    try {
-                        wait((long) 300.0);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-
+        distanceVoyager = (TextView) findViewById(R.id.MainActivity_traveled);
+        distanceVoyager.setText(R.string.distanceVoyagerInitiale);
         startStop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             LatLng pos;
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    pos = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation().getLongitude());
-                    lastKnownPos = pos;
-                    mMap.addMarker(new MarkerOptions().position(pos).
-                            icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).
-                            title(getResources().getString(R.string.start)));
-                    //getPos.start();
+                    if (course == null) {
+                        course = new Course();
+                        initialiserCourse();
+                    } else {
+                        //TODO save la course encore en cours
+                        mMap.clear();
+                        course = new Course();
+                        initialiserCourse();
+                    }
                 } else {
                     pos = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation().getLongitude());
                     mMap.addMarker(new MarkerOptions().position(pos).
                             icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                             .title(getResources().getString(R.string.stop)));
-                   // getPos.stop();
+                    course.changeState();
                 }
+            }
+
+            private void initialiserCourse() {
+                pos = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation().getLongitude());
+                lastKnownPos = pos;
+                mMap.addMarker(new MarkerOptions().position(pos).
+                        icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).
+                        title(getResources().getString(R.string.start)));
             }
         });
     }
 
     private void drawLine() {
-        if (lastKnownPos != null) {
-            newPos = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation().getLongitude());
-            PolylineOptions opts = new PolylineOptions().width(5).color(Color.BLUE).add(lastKnownPos).add(newPos);
-            Polyline line = mMap.addPolyline(opts);
-            //TODO la classe course
-            lastKnownPos = newPos;
-
+        if (course.getState() != StateCourse.ARRETER) {
+            if (lastKnownPos != null) {
+                newPos = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation().getLongitude());
+                PolylineOptions opts = new PolylineOptions().width(5).color(Color.BLUE).add(lastKnownPos).add(newPos);
+                mMap.addPolyline(opts);
+                course.ajouterDistance(calculerDistante());
+                distanceVoyager.setText(String.format("%s%s", formatDecimal(), getString(R.string.unite_distance)));
+                lastKnownPos = newPos;
+            }
         }
     }
 
+    private double calculerDistante() {
+        Location lastLoc = new Location("");
+        Location newLoc = new Location("");
+        lastLoc.setLatitude(lastKnownPos.latitude);
+        lastLoc.setLongitude(lastKnownPos.longitude);
+        newLoc.setLongitude(newPos.longitude);
+        newLoc.setLatitude(newPos.latitude);
+
+
+        return (double) (lastLoc.distanceTo(newLoc) / 1000);
+    }
+
+    private String formatDecimal(){
+        DecimalFormat format = new DecimalFormat("0.00");
+        String formatted = format.format(course.getDistanteParcourue());
+        return formatted;
+
+    }
 }
