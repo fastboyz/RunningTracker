@@ -11,6 +11,20 @@ import ca.qc.bdeb.p45.runningtracker.Modele.Course;
  * Created by mbiel on 11/25/2015.
  */
 public class Utils {
+    public enum COURSE_TYPE{
+        VELO(1),
+        PIEDS(2);
+        private final int VALEUR;
+
+        COURSE_TYPE(final int valeur){
+            this.VALEUR = valeur;
+        }
+
+        public int getVALEUR() {
+            return this.VALEUR;
+        }
+    }
+
     private static Utils ourInstance = new Utils();
 
     public static Utils getInstance() {
