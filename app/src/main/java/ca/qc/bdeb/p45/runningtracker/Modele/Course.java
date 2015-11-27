@@ -56,7 +56,11 @@ public class Course {
         return distanteParcourue/tempsEcouler;
     }
 
-    public void setDate(Date date){
+    public double getPourcentageObjectifCompleter() {
+        return distanteParcourue/objectif;
+    }
+
+    public void setDate(Date date) {
         this.date = date;
     }
 
