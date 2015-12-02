@@ -2,21 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/Menu_course" android:icon="@android:drawable/ic_menu_camera"
+        <item android:id="@+id/Menu_course" android:icon="@android:drawable/ic_dialog_map"
             android:title="@string/Course" />
-        <item android:id="@+id/Menu_historique" android:icon="@android:drawable/ic_menu_gallery"
+        <item android:id="@+id/Menu_historique" android:icon="@android:drawable/ic_menu_today"
             android:title="@string/historique" />
-        <item android:id="@+id/Menu_objectif" android:icon="@android:drawable/ic_menu_slideshow"
+        <item android:id="@+id/Menu_objectif" android:icon="@android:drawable/ic_menu_agenda"
             android:title="@string/objectif" />
-        <item android:id="@+id/Menu_Statistique" android:icon="@android:drawable/ic_menu_manage"
+        <item android:id="@+id/Menu_Statistique" android:icon="@android:drawable/ic_menu_sort_by_size"
             android:title="@string/statistiques" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="@string/communication">
         <menu>
             <item android:id="@+id/nav_share" android:icon="@android:drawable/ic_menu_share"
                 android:title="@string/partager" />
         </menu>
     </item>
-
 </menu>

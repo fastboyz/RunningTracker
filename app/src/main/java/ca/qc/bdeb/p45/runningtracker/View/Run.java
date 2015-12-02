@@ -133,7 +133,7 @@ public class Run extends Fragment implements OnMapReadyCallback {
         mapFragment.getMapAsync(this);
         nbp = (NumberProgressBar) getActivity().findViewById(R.id.MainActivity_progess);
         nbp.setMax(100);
-        nbp.setProgress(25);
+        nbp.setProgress(0);
         chronometre = (Chronometer) getActivity().findViewById(R.id.MainActivity_time);
         //chronometre.setFormat("MM:SS");
         startStop = (ToggleButton) getActivity().findViewById(R.id.MainActivity_btnStartStop);

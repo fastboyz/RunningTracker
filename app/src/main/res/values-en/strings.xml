@@ -13,4 +13,9 @@
     <string name="time">Time (MM:SS)</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
+    <string name="communication">Communication</string>
+    <string name="Objective">Objectif of </string>
+    <string name="distanceVoyagerInitiale"></string>
+    <string name="google_maps_key" translatable="false"></string>
+    <string name="hello_blank_fragment"></string>
 </resources>
