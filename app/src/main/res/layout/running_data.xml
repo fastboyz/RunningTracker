@@ -11,7 +11,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
-    tools:showIn="@layout/main_activity_header">
+    tools:showIn="@layout/running_content">
 
     <LinearLayout
         android:id="@+id/MainActivity_layoutTileSpeedCal"
@@ -37,7 +37,7 @@
                 android:gravity="center"
                 android:textColor="@color/colorPrimaryText"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="18sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/MainActivity_CaloriesBrule"
@@ -47,7 +47,7 @@
                 android:text="@string/BurnedCaloriesHolder"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold|italic" />
         </LinearLayout>
 
@@ -67,7 +67,7 @@
                 android:text="@string/speed"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="18sp"/>
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/MainActivity_Speed"
@@ -76,7 +76,7 @@
                 android:gravity="center"
                 android:text="@string/speedHolder"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textColor="@color/colorPrimaryText"
                 android:textStyle="bold|italic" />
         </LinearLayout>
@@ -111,7 +111,7 @@
                 android:gravity="center"
                 android:textColor="@color/colorPrimaryText"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="18sp" />
+                android:textSize="15sp" />
 
             <Chronometer
                 android:id="@+id/MainActivity_time"
@@ -121,7 +121,7 @@
                 android:textAllCaps="true"
                 android:text="@string/timeHolder"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textColor="@color/colorPrimaryText"
                 android:textStyle="bold|italic" />
         </LinearLayout>
@@ -142,7 +142,7 @@
                 android:text="@string/podo"
                 android:textColor="@color/colorPrimaryText"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="18sp"/>
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/MainActivity_podo"
@@ -152,13 +152,10 @@
                 android:text="@string/podoHolder"
                 android:textColor="@color/colorPrimaryText"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold|italic" />
         </LinearLayout>
 
     </LinearLayout>
-
-
-
 
 </RelativeLayout>

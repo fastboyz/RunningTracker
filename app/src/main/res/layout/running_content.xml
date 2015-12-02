@@ -8,9 +8,7 @@
     android:layout_height="match_parent"
     android:paddingTop="@dimen/activity_vertical_marginQuarter"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MainActivity"
-    tools:showIn="@layout/app_bar_main"
-    android:backgroundTint="@color/common_google_signin_btn_text_dark">
+    tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/MainActivity_traveled"
@@ -23,7 +21,7 @@
         android:text="@string/Traveled"
         android:textAllCaps="true"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="55sp" />
+        android:textSize="45sp" />
 
     <TextView
         android:id="@+id/MainActivity_objective"
@@ -37,7 +35,7 @@
         android:text="@string/Objective"
         android:textAllCaps="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="20sp" />
+        android:textSize="15sp" />
 
     <com.daimajia.numberprogressbar.NumberProgressBar
         android:id="@+id/MainActivity_progess"
@@ -62,7 +60,7 @@
 
     <include
         android:id="@+id/MainActivity_inContent"
-        layout="@layout/content_main"
+        layout="@layout/running_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/MainActivity_progess" />
@@ -78,6 +76,7 @@
 
     <include
         layout="@layout/activity_maps"
+        android:id="@+id/run_map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/MainActivity_inContent" />

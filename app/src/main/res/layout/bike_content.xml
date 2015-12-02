@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/MainActivity_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/activity_vertical_marginQuarter"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/BikeFragment_traveled"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:text="@string/Traveled"
+        android:textAllCaps="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="45sp" />
+
+    <TextView
+        android:id="@+id/BikeFragment_objective"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/BikeFragment_traveled"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:text="@string/Objective"
+        android:textAllCaps="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="15sp" />
+
+    <com.daimajia.numberprogressbar.NumberProgressBar
+        android:id="@+id/BikeFragment_progess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/BikeFragment_objective"
+        android:layout_marginBottom="8dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        custom:progress_reached_bar_height="2dp"
+        custom:progress_reached_color="@color/colorAccent"
+        custom:progress_text_color="@color/colorPrimaryText"
+        custom:progress_text_offset="1dp"
+        custom:progress_text_size="12sp"
+        custom:progress_text_visibility="visible"
+        custom:progress_unreached_bar_height="1dp"
+        custom:progress_unreached_color="@color/colorPrimaryLight" />
+
+    <include
+        android:id="@+id/BikeFragment_inContent"
+        layout="@layout/bike_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/BikeFragment_progess" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black"
+        android:layout_alignBottom="@+id/BikeFragment_inContent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/view" />
+
+
+    <include
+        layout="@layout/activity_maps"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/BikeFragment_inContent" />
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/BikeFragment_btnStartStop"
+        android:textOn="@string/stop"
+        android:textOff="@string/start"
+        android:layout_below="@+id/view"
+        android:layout_toRightOf="@+id/BikeFragment_objective"
+        android:layout_toEndOf="@+id/BikeFragment_objective"
+        android:elevation="10dp" />
+
+
+</RelativeLayout>
