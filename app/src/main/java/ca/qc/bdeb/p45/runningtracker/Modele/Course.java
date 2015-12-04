@@ -22,13 +22,12 @@ public class Course {
     }
 
     public void setTempsEcouler(double tempsEcouler) {
-
         this.tempsEcouler = tempsEcouler;
     }
 
     private StateCourse state;
 
-    public void ajouterDistance (double distance){
+    public void ajouterDistance (double distance) {
         distanteParcourue = distanteParcourue + distance;
     }
 

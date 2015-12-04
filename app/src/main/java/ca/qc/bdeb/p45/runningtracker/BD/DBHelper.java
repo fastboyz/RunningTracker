@@ -36,9 +36,10 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String COURSE_TEMPS = "TEMPS";
     private static final String COURSE_TYPE = "TYPE";
 
-    private static final String TABLE_NOM_OBJECTIF = "COURSE";
+    private static final String TABLE_NOM_OBJECTIF = "OBJECTIF";
     // Noms de colonnes
     private static final String OBJECTIF_ID = "_id";
+    private static final String OBJECTIF_INITIALE = "DISTANCE_INITIALE";
     private static final String OBJECTIF_DISTANCE = "DISTANCE";
     private static final String OBJECTIF_DATE_FINAL = "VITESSE";
     private static final String OBJECTIF_DATE_COMMENCEMENT = "NBR_PAS";
@@ -60,7 +61,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sqlClient = "CREATE TABLE " + TABLE_NOM_OBJECTIF + "("
+        String sqlClient = "CREATE TABLE " + TABLE_NOM_COURSE + "("
                 + COURSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COURSE_DISTANCE + " REAL, "
                 + COURSE_VITESSE + " REAL, "
@@ -71,8 +72,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 + COURSE_TEMPS + " REAL)";
         db.execSQL(sqlClient);
 
-        sqlClient = "CREATE TABLE " + TABLE_NOM_COURSE + "("
+        sqlClient = "CREATE TABLE " + TABLE_NOM_OBJECTIF + "("
                 + OBJECTIF_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + OBJECTIF_INITIALE + " REAL, "
                 + OBJECTIF_DISTANCE + " REAL, "
                 + OBJECTIF_DATE_FINAL + " LONG, "
                 + OBJECTIF_DATE_COMMENCEMENT + " LONG)";

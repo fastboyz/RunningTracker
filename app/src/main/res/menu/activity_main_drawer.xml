@@ -4,6 +4,8 @@
     <group android:checkableBehavior="single">
         <item android:id="@+id/Menu_course" android:icon="@android:drawable/ic_dialog_map"
             android:title="@string/Course" />
+        <item android:id="@+id/Menu_bike" android:icon="@android:drawable/ic_dialog_map"
+            android:title="@string/Bike" />
         <item android:id="@+id/Menu_historique" android:icon="@android:drawable/ic_menu_today"
             android:title="@string/historique" />
         <item android:id="@+id/Menu_objectif" android:icon="@android:drawable/ic_menu_agenda"

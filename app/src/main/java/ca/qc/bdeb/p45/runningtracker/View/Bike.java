@@ -111,8 +111,7 @@ public class Bike extends Fragment implements OnMapReadyCallback {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+            // to do: must implement OnFragmentInteractionListener
         }
     }
 
@@ -159,7 +158,7 @@ public class Bike extends Fragment implements OnMapReadyCallback {
         nbp.setProgress(0);
         chronometre = (Chronometer) getActivity().findViewById(R.id.MainActivity_time_bike);
         //chronometre.setFormat("MM:SS");
-        ToggleButton startStop = (ToggleButton) getActivity().findViewById(R.id.MainActivity_btnStartStop);
+        ToggleButton startStop = (ToggleButton) getActivity().findViewById(R.id.BikeFragment_btnStartStop);
         distanceVoyager = (TextView) getActivity().findViewById(R.id.MainActivity_traveled_bike);
         distanceVoyager.setText(R.string.distanceVoyagerInitiale);
         speed = (TextView) getActivity().findViewById(R.id.MainActivity_Speed_bike);
@@ -226,7 +225,7 @@ public class Bike extends Fragment implements OnMapReadyCallback {
         super.onActivityCreated(savedInstanceState);
         initialise();
     }
-    
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

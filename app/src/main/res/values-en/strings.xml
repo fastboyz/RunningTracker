@@ -18,4 +18,5 @@
     <string name="distanceVoyagerInitiale"></string>
     <string name="google_maps_key" translatable="false"></string>
     <string name="hello_blank_fragment"></string>
+    <string name="Bike">Bicycle</string>
 </resources>

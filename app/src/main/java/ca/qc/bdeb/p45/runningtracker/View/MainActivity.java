@@ -1,5 +1,8 @@
 package ca.qc.bdeb.p45.runningtracker.View;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -12,13 +15,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+
+import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+
 import ca.qc.bdeb.p45.runningtracker.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Run.OnFragmentInteractionListener, OnMapReadyCallback {
-
+    ShareDialog shareDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +54,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
-
 
     @Override
     public void onBackPressed() {
@@ -81,18 +86,39 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        Fragment fragment;
+        FragmentManager fragmentManager = getSupportFragmentManager();
         int id = item.getItemId();
+        FrameLayout fragContainer = new FrameLayout(this);
+        fragContainer.setId(R.id.MainActivity_Frag_container);
+
+        Class fragmentClass = null;
 
         if (id == R.id.Menu_course) {
-            // Handle the camera action
+            fragmentClass = Run.class;
+        } else if (id == R.id.Menu_bike) {
+            fragmentClass = Bike.class;
         } else if (id == R.id.Menu_historique) {
 
-        } else if (id == R.id.Menu_objectif) {
+        } else if ( id == R.id.Menu_objectif) {
 
         } else if (id == R.id.Menu_Statistique) {
-
+            fragmentClass = Statistiques.class;
         } else if (id == R.id.nav_share) {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+            shareIntent.setType("*/*");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "Run Tracker FTW");
+            startActivity(Intent.createChooser(shareIntent, "Partager avec"));
+        }
 
+        if (fragmentClass != null) {
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+                fragmentManager.beginTransaction().replace(R.id.MainActivity_Frag_container, fragment).commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
