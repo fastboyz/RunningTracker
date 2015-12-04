@@ -50,15 +50,12 @@ public class Run extends Fragment implements OnMapReadyCallback {
     private String mParam2;
 
 
-    private NumberProgressBar nbp;
     private GoogleMap mMap;
-    private ToggleButton startStop;
     private static LatLng lastKnownPos;
-    private static LatLng newPos;
     private Course course;
     private TextView distanceVoyager;
     private Chronometer chronometre;
-    private SupportMapFragment mapFragment;
+    private TextView speed;
 
     private OnFragmentInteractionListener mListener;
 
@@ -87,9 +84,6 @@ public class Run extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -128,17 +122,18 @@ public class Run extends Fragment implements OnMapReadyCallback {
 
 
     private void initialise() {
-        mapFragment = (SupportMapFragment)getChildFragmentManager().findFragmentById((R.id.map));
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById((R.id.map));
 
         mapFragment.getMapAsync(this);
-        nbp = (NumberProgressBar) getActivity().findViewById(R.id.MainActivity_progess);
+        NumberProgressBar nbp = (NumberProgressBar) getActivity().findViewById(R.id.MainActivity_progess);
         nbp.setMax(100);
         nbp.setProgress(0);
         chronometre = (Chronometer) getActivity().findViewById(R.id.MainActivity_time);
         //chronometre.setFormat("MM:SS");
-        startStop = (ToggleButton) getActivity().findViewById(R.id.MainActivity_btnStartStop);
+        ToggleButton startStop = (ToggleButton) getActivity().findViewById(R.id.MainActivity_btnStartStop);
         distanceVoyager = (TextView) getActivity().findViewById(R.id.MainActivity_traveled);
         distanceVoyager.setText(R.string.distanceVoyagerInitiale);
+        speed = (TextView) getActivity().findViewById(R.id.MainActivity_Speed);
         startStop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             LatLng pos;
 
@@ -163,7 +158,7 @@ public class Run extends Fragment implements OnMapReadyCallback {
                             .title(getResources().getString(R.string.stop)));
                     course.changeState();
                     chronometre.stop();
-                    course.setTempsEcouler(SystemClock.elapsedRealtime()-chronometre.getBase());
+                    course.setTempsEcouler(SystemClock.elapsedRealtime() - chronometre.getBase());
                 }
             }
 
@@ -182,14 +177,17 @@ public class Run extends Fragment implements OnMapReadyCallback {
     private void drawLine() {
         if (course.getState() != StateCourse.ARRETER) {
             if (lastKnownPos != null) {
-                newPos = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation()
+                LatLng newPos = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation()
                         .getLongitude());
                 PolylineOptions opts = new PolylineOptions().width(5).color(Color.BLUE)
                         .add(lastKnownPos).add(newPos);
                 mMap.addPolyline(opts);
                 course.ajouterDistance(Utils.getInstance().calculerDistante(lastKnownPos, newPos));
+                course.setTempsEcouler(SystemClock.elapsedRealtime() - chronometre.getBase());
                 distanceVoyager.setText(String.format("%s%s", Utils.getInstance()
-                        .formatDecimal(course), getString(R.string.unite_distance)));
+                        .formatDecimal(course.getDistanteParcourue()), getString(R.string.unite_distance)));
+                speed.setText(String.format("%s%s", Utils.getInstance()
+                        .formatDecimal(course.getVitesse()), getString(R.string.unite_vitesse)));
                 lastKnownPos = newPos;
             }
         }
@@ -206,8 +204,6 @@ public class Run extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-
         return inflater.inflate(R.layout.fragment_run, container, false);
     }
 

@@ -53,7 +53,7 @@ public class Course {
     }
 
     public double getVitesse() {
-        return distanteParcourue/tempsEcouler;
+        return distanteParcourue/Utils.getInstance().convertirEnHeure(tempsEcouler);
     }
 
     public double getPourcentageObjectifCompleter() {

@@ -13,16 +13,16 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/MainActivity_layoutTileTempPodo"
+        android:id="@+id/MainActivity_layoutTileTempPodo_bike"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@+id/MainActivity_layoutTileSpeedCal"
+        android:layout_below="@+id/MainActivity_layoutTileSpeedCal_bike"
         android:paddingTop="@dimen/activity_vertical_marginQuarter"
         android:baselineAligned="false">
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
@@ -31,7 +31,7 @@
             android:layout_marginRight="@dimen/fab_margin">
 
             <TextView
-                android:id="@+id/MainActivity_lblTime"
+                android:id="@+id/MainActivity_lblTime_bike"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/time"
@@ -41,7 +41,7 @@
                 android:textSize="15sp" />
 
             <Chronometer
-                android:id="@+id/MainActivity_time"
+                android:id="@+id/MainActivity_time_bike"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -56,7 +56,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/MainActivity_layoutTileSpeedCal"
+        android:id="@+id/MainActivity_layoutTileSpeedCal_bike"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -72,7 +72,7 @@
             android:layout_marginRight="@dimen/fab_margin">
 
             <TextView
-                android:id="@+id/MainActivity_lblCaloriesBrule"
+                android:id="@+id/MainActivity_lblCaloriesBrule_bike"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/BurnedCalories"
@@ -82,7 +82,7 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/MainActivity_CaloriesBrule"
+                android:id="@+id/MainActivity_CaloriesBrule_bike"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -102,7 +102,7 @@
             android:layout_marginLeft="@dimen/fab_margin">
 
             <TextView
-                android:id="@+id/MainActivity_lblSpeed"
+                android:id="@+id/MainActivity_lblSpeed_bike"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -112,7 +112,7 @@
                 android:textSize="15sp"/>
 
             <TextView
-                android:id="@+id/MainActivity_Speed"
+                android:id="@+id/MainActivity_Speed_bike"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

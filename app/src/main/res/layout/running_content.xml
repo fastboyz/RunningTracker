@@ -89,8 +89,7 @@
         android:textOff="@string/start"
         android:layout_below="@+id/view"
         android:layout_toRightOf="@+id/MainActivity_objective"
-        android:layout_toEndOf="@+id/MainActivity_objective"
-        android:elevation="10dp" />
+        android:layout_toEndOf="@+id/MainActivity_objective" />
 
 
 </RelativeLayout>

@@ -43,12 +43,16 @@ public class Utils {
         newLoc.setLongitude(newPos.longitude);
         newLoc.setLatitude(newPos.latitude);
 
-
+        // Distance en Kilometre
         return (double) (lastLoc.distanceTo(newLoc) / 1000);
     }
 
-    public String formatDecimal(Course course) {
+    public String formatDecimal(double aConvertir) {
         DecimalFormat format = new DecimalFormat("0.00");
-        return format.format(course.getDistanteParcourue());
+        return format.format(aConvertir);
+    }
+
+    public double convertirEnHeure(double temp){
+        return (temp / (1000*60*60));
     }
 }

@@ -1,13 +1,34 @@
 package ca.qc.bdeb.p45.runningtracker.View;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Chronometer;
+import android.widget.CompoundButton;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
+import com.daimajia.numberprogressbar.NumberProgressBar;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+
+import ca.qc.bdeb.p45.runningtracker.Common.StateCourse;
+import ca.qc.bdeb.p45.runningtracker.Common.Utils;
+import ca.qc.bdeb.p45.runningtracker.Modele.Course;
 import ca.qc.bdeb.p45.runningtracker.R;
 
 /**
@@ -18,7 +39,7 @@ import ca.qc.bdeb.p45.runningtracker.R;
  * Use the {@link Bike#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Bike extends Fragment {
+public class Bike extends Fragment implements OnMapReadyCallback {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -27,6 +48,15 @@ public class Bike extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+
+    private GoogleMap mMap;
+    private static LatLng lastKnownPos;
+    private Course course;
+    private TextView distanceVoyager;
+    private Chronometer chronometre;
+    private TextView speed;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -92,6 +122,111 @@ public class Bike extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setScrollGesturesEnabled(false);
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+
+        mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+            @Override
+            public void onMyLocationChange(Location location) {
+                moveCamToLocation(mMap.getMyLocation());
+                if (course != null) {
+                    drawLine();
+                }
+            }
+        });
+    }
+
+    private void moveCamToLocation(Location location) {
+        LatLng position;
+        if (location != null) {
+            position = new LatLng(location.getLatitude(), location.getLongitude());
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, 14.85f));
+        } else {
+            Toast.makeText(getContext(), "GPS Fermer", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void initialise() {
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById((R.id.map));
+
+        mapFragment.getMapAsync(this);
+        NumberProgressBar nbp = (NumberProgressBar) getActivity().findViewById(R.id.BikeFragment_progess);
+        nbp.setMax(100);
+        nbp.setProgress(0);
+        chronometre = (Chronometer) getActivity().findViewById(R.id.MainActivity_time_bike);
+        //chronometre.setFormat("MM:SS");
+        ToggleButton startStop = (ToggleButton) getActivity().findViewById(R.id.MainActivity_btnStartStop);
+        distanceVoyager = (TextView) getActivity().findViewById(R.id.MainActivity_traveled_bike);
+        distanceVoyager.setText(R.string.distanceVoyagerInitiale);
+        speed = (TextView) getActivity().findViewById(R.id.MainActivity_Speed_bike);
+        startStop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            LatLng pos;
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    if (course != null) {
+                        //TODO save the current course
+                        mMap.clear();
+                        distanceVoyager.setText(R.string.distanceVoyagerInitiale);
+                    }
+                    course = new Course();
+                    chronometre.setBase(SystemClock.elapsedRealtime());
+                    chronometre.start();
+                    initialiserCourse();
+                } else {
+                    pos = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation()
+                            .getLongitude());
+                    mMap.addMarker(new MarkerOptions().position(pos).
+                            icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory
+                                    .HUE_RED))
+                            .title(getResources().getString(R.string.stop)));
+                    course.changeState();
+                    chronometre.stop();
+                    course.setTempsEcouler(SystemClock.elapsedRealtime() - chronometre.getBase());
+                }
+            }
+
+            private void initialiserCourse() {
+                pos = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation()
+                        .getLongitude());
+                lastKnownPos = pos;
+                mMap.addMarker(new MarkerOptions().position(pos).
+                        icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory
+                                .HUE_GREEN)).
+                        title(getResources().getString(R.string.start)));
+            }
+        });
+    }
+
+    private void drawLine() {
+        if (course.getState() != StateCourse.ARRETER) {
+            if (lastKnownPos != null) {
+                LatLng newPos = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation()
+                        .getLongitude());
+                PolylineOptions opts = new PolylineOptions().width(5).color(Color.BLUE)
+                        .add(lastKnownPos).add(newPos);
+                mMap.addPolyline(opts);
+                course.ajouterDistance(Utils.getInstance().calculerDistante(lastKnownPos, newPos));
+                course.setTempsEcouler(SystemClock.elapsedRealtime() - chronometre.getBase());
+                distanceVoyager.setText(String.format("%s%s", Utils.getInstance()
+                        .formatDecimal(course.getDistanteParcourue()), getString(R.string.unite_distance)));
+                speed.setText(String.format("%s%s", Utils.getInstance()
+                        .formatDecimal(course.getVitesse()), getString(R.string.unite_vitesse)));
+                lastKnownPos = newPos;
+            }
+        }
+    }
+
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initialise();
+    }
+    
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
