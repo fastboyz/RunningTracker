@@ -30,4 +30,6 @@ dependencies {
     compile 'com.android.support:support-v4:23.1.1'
     compile 'com.android.support:support-v13:23.1.1'
     compile 'com.facebook.android:facebook-android-sdk:4.6.0'
+    compile 'com.github.blackfizz:eazegraph:1.2.5l@aar'
+    compile 'com.nineoldandroids:library:2.4.0'
 }

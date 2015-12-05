@@ -79,11 +79,22 @@ public class DBHelper extends SQLiteOpenHelper {
                 + OBJECTIF_DATE_FINAL + " LONG, "
                 + OBJECTIF_DATE_COMMENCEMENT + " LONG)";
         db.execSQL(sqlClient);
+
+        creerObjectifInitial(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+
+    public void creerObjectifInitial(SQLiteDatabase db) {
+        ContentValues values = new ContentValues();
+        values.put(OBJECTIF_INITIALE, 0);
+        values.put(OBJECTIF_DISTANCE, 0);
+        values.put(OBJECTIF_DATE_FINAL, 0);
+        values.put(OBJECTIF_DATE_COMMENCEMENT, 0);
+        long id = db.insert(TABLE_NOM_OBJECTIF, null, values);
     }
 
     public void ajouterCourse(Course course) {
@@ -108,6 +119,32 @@ public class DBHelper extends SQLiteOpenHelper {
                 + COURSE_DISTANCE_OBJECTIF + ";", null);
         long numRows = DatabaseUtils.queryNumEntries(db, "table_name");
         return (nbrObjectifRéussi / numRows) * 100;
+    }
+
+    public double getLastRunDistance(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from " + TABLE_NOM_COURSE + " where " + COURSE_ID
+                + " = (SELECT MAX("+COURSE_ID+") FROM "+TABLE_NOM_COURSE+")" + ";", null);
+        if (cursor != null){
+            cursor.moveToFirst();
+            return cursor.getDouble(1);
+        } else {
+            return -1;
+        }
+    }
+
+    public double getCurrentObjectif(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from " + TABLE_NOM_OBJECTIF + " where " + OBJECTIF_ID
+                + " = (SELECT MAX("+OBJECTIF_ID+") FROM "+TABLE_NOM_OBJECTIF+")" + ";", null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            double initial = cursor.getDouble(1);
+            double distanceFinal = cursor.getDouble(1);
+            return distanceFinal;
+        } else {
+            return -1;
+        }
     }
 
     public ArrayList<Course> getLasMonthRuns() {

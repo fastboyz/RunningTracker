@@ -27,15 +27,14 @@
         android:id="@+id/MainActivity_objective"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/MainActivity_traveled"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="8dp"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:text="@string/Objective"
         android:textAllCaps="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:layout_below="@+id/MainActivity_traveled"
+        android:layout_toRightOf="@+id/textView2"
+        android:layout_toEndOf="@+id/textView2" />
 
     <com.daimajia.numberprogressbar.NumberProgressBar
         android:id="@+id/MainActivity_progess"
@@ -87,9 +86,23 @@
         android:id="@+id/MainActivity_btnStartStop"
         android:textOn="@string/stop"
         android:textOff="@string/start"
-        android:layout_below="@+id/view"
-        android:layout_toRightOf="@+id/MainActivity_objective"
-        android:layout_toEndOf="@+id/MainActivity_objective" />
+        android:layout_below="@+id/MainActivity_inContent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:text="@string/objectif_intro"
+        android:textAllCaps="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="15sp"
+        android:layout_below="@+id/MainActivity_traveled"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>

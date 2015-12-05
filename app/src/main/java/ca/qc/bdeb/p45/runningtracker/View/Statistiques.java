@@ -10,6 +10,12 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.maps.OnMapReadyCallback;
 
+import org.eazegraph.lib.charts.BarChart;
+import org.eazegraph.lib.charts.ValueLineChart;
+import org.eazegraph.lib.models.BarModel;
+import org.eazegraph.lib.models.ValueLinePoint;
+import org.eazegraph.lib.models.ValueLineSeries;
+
 import ca.qc.bdeb.p45.runningtracker.R;
 
 /**
@@ -107,6 +113,46 @@ public class Statistiques extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initialise();
+    }
+    private void initialise() {
+        BarChart mBarChart = (BarChart)getActivity().findViewById(R.id.barchart);
+
+        mBarChart.addBar(new BarModel("12-03", 2.3f, 0xFF123456));
+        mBarChart.addBar(new BarModel("12-04", 2.f,  0xFF343456));
+        mBarChart.addBar(new BarModel("12-05", 3.3f, 0xFF563456));
+        mBarChart.addBar(new BarModel("12-06", 1.1f, 0xFF873F56));
+        mBarChart.addBar(new BarModel("12-07", 2.7f, 0xFF56B7F1));
+        mBarChart.addBar(new BarModel("12-08", 2.f,  0xFF343456));
+        mBarChart.addBar(new BarModel("12-09", 0.4f, 0xFF1FF4AC));
+
+        mBarChart.startAnimation();
+
+        ValueLineChart mCubicValueLineChart = (ValueLineChart) getActivity().findViewById(R.id.cubiclinechart);
+
+        ValueLineSeries series = new ValueLineSeries();
+        series.setColor(0xFF56B7F1);
+
+        series.addPoint(new ValueLinePoint("Jan", 2.4f));
+        series.addPoint(new ValueLinePoint("Feb", 3.4f));
+        series.addPoint(new ValueLinePoint("Mar", .4f));
+        series.addPoint(new ValueLinePoint("Apr", 1.2f));
+        series.addPoint(new ValueLinePoint("Mai", 2.6f));
+        series.addPoint(new ValueLinePoint("Jun", 1.0f));
+        series.addPoint(new ValueLinePoint("Jul", 3.5f));
+        series.addPoint(new ValueLinePoint("Aug", 2.4f));
+        series.addPoint(new ValueLinePoint("Sep", 2.4f));
+        series.addPoint(new ValueLinePoint("Oct", 3.4f));
+        series.addPoint(new ValueLinePoint("Nov", .4f));
+        series.addPoint(new ValueLinePoint("Dec", 1.3f));
+
+        mCubicValueLineChart.addSeries(series);
+        mCubicValueLineChart.startAnimation();
     }
 
 }

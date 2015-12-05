@@ -19,4 +19,5 @@
     <string name="google_maps_key" translatable="false"></string>
     <string name="hello_blank_fragment"></string>
     <string name="Bike">Bicycle</string>
+    <string name="objectif_intro">Target of</string>
 </resources>

@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import ca.qc.bdeb.p45.runningtracker.BD.DBHelper;
 import ca.qc.bdeb.p45.runningtracker.Common.StateCourse;
 import ca.qc.bdeb.p45.runningtracker.Common.Utils;
 import ca.qc.bdeb.p45.runningtracker.Modele.Course;
@@ -56,6 +57,7 @@ public class Bike extends Fragment implements OnMapReadyCallback {
     private TextView distanceVoyager;
     private Chronometer chronometre;
     private TextView speed;
+    private TextView objectif;
 
 
     private OnFragmentInteractionListener mListener;
@@ -160,8 +162,10 @@ public class Bike extends Fragment implements OnMapReadyCallback {
         //chronometre.setFormat("MM:SS");
         ToggleButton startStop = (ToggleButton) getActivity().findViewById(R.id.BikeFragment_btnStartStop);
         distanceVoyager = (TextView) getActivity().findViewById(R.id.MainActivity_traveled_bike);
-        distanceVoyager.setText(R.string.distanceVoyagerInitiale);
+        distanceVoyager.setText("0.00 Km");
         speed = (TextView) getActivity().findViewById(R.id.MainActivity_Speed_bike);
+        objectif = (TextView) getActivity().findViewById(R.id.MainActivity_objective_bike);
+        objectif.setText(" " + DBHelper.getInstance(getActivity()).getCurrentObjectif() + " Km");
         startStop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             LatLng pos;
 

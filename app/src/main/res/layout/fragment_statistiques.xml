@@ -1,10 +1,52 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="ca.qc.bdeb.p45.runningtracker.View.Statistiques">
+    android:layout_height="fill_parent"
+    tools:context="ca.qc.bdeb.p45.runningtracker.View.Statistiques"
+    android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/titre_tableau_distance_semaine"
+        android:id="@+id/textView4"
+        android:gravity="center"
+        android:layout_weight="2" />
+
+    <org.eazegraph.lib.charts.BarChart
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/barchart"
+        android:layout_width="match_parent"
+        android:layout_height="256dp"
+        android:padding="10dp"
+        app:egFixedBarWidth="true"
+        app:egBarWidth="20dp"
+        app:egLegendHeight="40dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/titre_tableau_distance_mois"
+        android:id="@+id/titre_tableau_distance_mois"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="2"
+        android:gravity="center_horizontal" />
+
+    <org.eazegraph.lib.charts.ValueLineChart
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cubiclinechart"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:egUseCubic="true"
+        app:egUseOverlapFill="true"
+        app:egCurveSmoothness="0.5"
+        app:egLegendHeight="40dp"
+        android:layout_weight="1" />
+
+
+</LinearLayout>
