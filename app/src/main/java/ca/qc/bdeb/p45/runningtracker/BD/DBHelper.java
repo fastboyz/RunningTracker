@@ -81,11 +81,46 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(sqlClient);
 
         creerObjectifInitial(db);
+        creerCourseInitial(db);
+
+        // Création de donné test durant la semaine passé
+        for (int i = 6; i >= 0; i--) {
+            creerCourseTest(db, new Course(6.2 * (i * 0.1), 5 * (i * 0.1), 154.25 * (i * 0.1),
+                    new Date(System.currentTimeMillis() - (i * (24 * 60 * 60 * 1000))), 666, 5.3,
+                    Utils.COURSE_TYPE.PIEDS));
+        }
+        creerCourseTest(db, new Course(6.2, 5, 154.25, new Date(System.currentTimeMillis()), 666,
+                5.3, Utils.COURSE_TYPE.PIEDS));
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+
+    public Course getAllStatsInOneDay(Date date) {
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setSeconds(0);
+        Date minDate = new Date(date.getTime());
+
+        date.setHours(24);
+        Date maxDate = new Date(date.getTime());
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Course course = new Course();
+        Cursor cursor = db.rawQuery("select * from " + TABLE_NOM_COURSE + " where " + COURSE_DATE
+                + " > "+ minDate.getTime() + " AND " + COURSE_DATE
+                + " < "+ maxDate.getTime() + ";", null);
+
+        if (cursor != null && cursor.getCount()!=0) {
+            cursor.moveToFirst();
+            do {
+                course.ajouterDistance(cursor.getDouble(1));
+                course.setTempsEcouler(course.getTempsEcouler() + cursor.getDouble(7));
+            } while (cursor.moveToNext());
+        }
+        return course;
     }
 
     public void creerObjectifInitial(SQLiteDatabase db) {
@@ -95,6 +130,30 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(OBJECTIF_DATE_FINAL, 0);
         values.put(OBJECTIF_DATE_COMMENCEMENT, 0);
         long id = db.insert(TABLE_NOM_OBJECTIF, null, values);
+    }
+
+    public void creerCourseInitial(SQLiteDatabase db) {
+        ContentValues values = new ContentValues();
+        values.put(COURSE_DISTANCE, 0);
+        values.put(COURSE_VITESSE, 0);
+        values.put(COURSE_DISTANCE_OBJECTIF, 0);
+        values.put(COURSE_NBR_PAS, 0);
+        values.put(COURSE_DATE, 0);
+        values.put(COURSE_TYPE, 0);
+        values.put(COURSE_TEMPS, 0);
+        long id = db.insert(TABLE_NOM_COURSE, null, values);
+    }
+
+    public void creerCourseTest(SQLiteDatabase db, Course course) {
+        ContentValues values = new ContentValues();
+        values.put(COURSE_DISTANCE, course.getDistanteParcourue());
+        values.put(COURSE_VITESSE, course.getVitesse());
+        values.put(COURSE_DISTANCE_OBJECTIF, course.getObjectif());
+        values.put(COURSE_NBR_PAS, course.getNbrPas());
+        values.put(COURSE_DATE, course.getDate().getTime());
+        values.put(COURSE_TYPE, course.getCourse_type().getVALEUR());
+        values.put(COURSE_TEMPS, course.getTempsEcouler());
+        long id = db.insert(TABLE_NOM_COURSE, null, values);
     }
 
     public void ajouterCourse(Course course) {
@@ -121,11 +180,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return (nbrObjectifRéussi / numRows) * 100;
     }
 
-    public double getLastRunDistance(){
+    public double getLastRunDistance() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_NOM_COURSE + " where " + COURSE_ID
-                + " = (SELECT MAX("+COURSE_ID+") FROM "+TABLE_NOM_COURSE+")" + ";", null);
-        if (cursor != null){
+                + " = (SELECT MAX(" + COURSE_ID + ") FROM " + TABLE_NOM_COURSE + ")" + ";", null);
+        if (cursor != null) {
             cursor.moveToFirst();
             return cursor.getDouble(1);
         } else {
@@ -133,10 +192,10 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public double getCurrentObjectif(){
+    public double getCurrentObjectif() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_NOM_OBJECTIF + " where " + OBJECTIF_ID
-                + " = (SELECT MAX("+OBJECTIF_ID+") FROM "+TABLE_NOM_OBJECTIF+")" + ";", null);
+                + " = (SELECT MAX(" + OBJECTIF_ID + ") FROM " + TABLE_NOM_OBJECTIF + ")" + ";", null);
         if (cursor != null) {
             cursor.moveToFirst();
             double initial = cursor.getDouble(1);

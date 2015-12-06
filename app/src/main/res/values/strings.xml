@@ -34,6 +34,6 @@
     <string name="Bike">Bicyclette</string>
     <string name="unite_vitesse">Km/h</string>
     <string name="objectif_intro">Objectif de</string>
-    <string name="titre_tableau_distance_semaine">Tableau des distances durans la derniere semaine</string>
-    <string name="titre_tableau_distance_mois">Tableau des distance parcourue durans le dernier mois</string>
+    <string name="titre_tableau_distance_semaine">Tableau des distance parcourue durant la dernière semaine</string>
+    <string name="titre_tableau_distance_mois">Tableau des distance parcourue durant le dernier mois</string>
 </resources>

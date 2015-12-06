@@ -14,18 +14,19 @@
         android:text="@string/titre_tableau_distance_semaine"
         android:id="@+id/textView4"
         android:gravity="center"
-        android:layout_weight="2" />
+        android:layout_weight="1"
+        android:lines="2" />
 
     <org.eazegraph.lib.charts.BarChart
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/barchart"
         android:layout_width="match_parent"
-        android:layout_height="256dp"
+        android:layout_height="200dp"
         android:padding="10dp"
         app:egFixedBarWidth="true"
         app:egBarWidth="20dp"
         app:egLegendHeight="40dp"
-        android:layout_weight="1" />
+        android:layout_weight="0" />
 
     <TextView
         android:layout_width="fill_parent"
@@ -34,7 +35,7 @@
         android:text="@string/titre_tableau_distance_mois"
         android:id="@+id/titre_tableau_distance_mois"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:gravity="center_horizontal" />
 
     <org.eazegraph.lib.charts.ValueLineChart
@@ -44,9 +45,43 @@
         android:layout_height="200dp"
         app:egUseCubic="true"
         app:egUseOverlapFill="true"
-        app:egCurveSmoothness="0.5"
+        app:egCurveSmoothness="0.4"
         app:egLegendHeight="40dp"
         android:layout_weight="1" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New ToggleButton"
+            android:id="@+id/statistiques_toggleButton_Distance"
+            android:textOff="Distance"
+            android:textOn="Distance"
+            android:layout_weight="1" />
+
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New ToggleButton"
+            android:id="@+id/statistiques_toggleButton_Temps"
+            android:textOff="Temps"
+            android:textOn="Temps"
+            android:layout_weight="1" />
+
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New ToggleButton"
+            android:textOff="Vitesse"
+            android:textOn="Vitesse"
+            android:id="@+id/statistiques_toggleButton_Vitesse"
+            android:layout_weight="1" />
+    </LinearLayout>
 
 
 </LinearLayout>

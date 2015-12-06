@@ -7,8 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.google.android.gms.maps.OnMapReadyCallback;
+import android.widget.ToggleButton;
 
 import org.eazegraph.lib.charts.BarChart;
 import org.eazegraph.lib.charts.ValueLineChart;
@@ -16,6 +15,11 @@ import org.eazegraph.lib.models.BarModel;
 import org.eazegraph.lib.models.ValueLinePoint;
 import org.eazegraph.lib.models.ValueLineSeries;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import ca.qc.bdeb.p45.runningtracker.BD.DBHelper;
+import ca.qc.bdeb.p45.runningtracker.Modele.Course;
 import ca.qc.bdeb.p45.runningtracker.R;
 
 /**
@@ -31,6 +35,12 @@ public class Statistiques extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private DBHelper db = DBHelper.getInstance(getActivity());
+    private ToggleButton distance;
+    private ToggleButton temps;
+    private ToggleButton vitesse;
+    private BarChart mBarChart;
+    private ValueLineChart mCubicValueLineChart;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -120,39 +130,106 @@ public class Statistiques extends Fragment {
         super.onActivityCreated(savedInstanceState);
         initialise();
     }
+
     private void initialise() {
-        BarChart mBarChart = (BarChart)getActivity().findViewById(R.id.barchart);
+        mBarChart = (BarChart) getActivity().findViewById(R.id.barchart);
+        distance = (ToggleButton) getActivity().findViewById(R.id.statistiques_toggleButton_Distance);
+        temps = (ToggleButton) getActivity().findViewById(R.id.statistiques_toggleButton_Temps);
+        vitesse = (ToggleButton) getActivity().findViewById(R.id.statistiques_toggleButton_Vitesse);
+        // Une bar par jour
+        showDistance();
+        distance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearGraphs();
+                showDistance();
+            }
+        });
+        temps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearGraphs();
+                showTemps();
+            }
+        });
+        vitesse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearGraphs();
+                showVitesse();
+            }
+        });
+    }
 
-        mBarChart.addBar(new BarModel("12-03", 2.3f, 0xFF123456));
-        mBarChart.addBar(new BarModel("12-04", 2.f,  0xFF343456));
-        mBarChart.addBar(new BarModel("12-05", 3.3f, 0xFF563456));
-        mBarChart.addBar(new BarModel("12-06", 1.1f, 0xFF873F56));
-        mBarChart.addBar(new BarModel("12-07", 2.7f, 0xFF56B7F1));
-        mBarChart.addBar(new BarModel("12-08", 2.f,  0xFF343456));
-        mBarChart.addBar(new BarModel("12-09", 0.4f, 0xFF1FF4AC));
-
+    private void showDistance() {
+        distance.setChecked(true);
+        temps.setChecked(false);
+        vitesse.setChecked(false);
+        for (int i = 6; i >= 0; i--) {
+            SimpleDateFormat dt = new SimpleDateFormat("MMM d");
+            Date date = new Date(System.currentTimeMillis() - (i * (24 * 60 * 60 * 1000)));
+            mBarChart.addBar(new BarModel(dt.format(date), (float) db.getAllStatsInOneDay(date).getDistanteParcourue(), 0xFF123456));
+        }
         mBarChart.startAnimation();
-
-        ValueLineChart mCubicValueLineChart = (ValueLineChart) getActivity().findViewById(R.id.cubiclinechart);
-
+        mCubicValueLineChart = (ValueLineChart) getActivity().findViewById(R.id.cubiclinechart);
         ValueLineSeries series = new ValueLineSeries();
         series.setColor(0xFF56B7F1);
-
-        series.addPoint(new ValueLinePoint("Jan", 2.4f));
-        series.addPoint(new ValueLinePoint("Feb", 3.4f));
-        series.addPoint(new ValueLinePoint("Mar", .4f));
-        series.addPoint(new ValueLinePoint("Apr", 1.2f));
-        series.addPoint(new ValueLinePoint("Mai", 2.6f));
-        series.addPoint(new ValueLinePoint("Jun", 1.0f));
-        series.addPoint(new ValueLinePoint("Jul", 3.5f));
-        series.addPoint(new ValueLinePoint("Aug", 2.4f));
-        series.addPoint(new ValueLinePoint("Sep", 2.4f));
-        series.addPoint(new ValueLinePoint("Oct", 3.4f));
-        series.addPoint(new ValueLinePoint("Nov", .4f));
-        series.addPoint(new ValueLinePoint("Dec", 1.3f));
-
+        for (int i = 30; i >= 0; i--) {
+            SimpleDateFormat dt = new SimpleDateFormat("MMM d");
+            Date date = new Date(System.currentTimeMillis() - (i * (24 * 60 * 60 * 1000)));
+            series.addPoint(new ValueLinePoint(dt.format(date), (float) db.getAllStatsInOneDay(date).getDistanteParcourue()));
+        }
         mCubicValueLineChart.addSeries(series);
         mCubicValueLineChart.startAnimation();
+    }
+
+    private void showVitesse() {
+        distance.setChecked(false);
+        temps.setChecked(false);
+        vitesse.setChecked(true);
+        for (int i = 6; i >= 0; i--) {
+            SimpleDateFormat dt = new SimpleDateFormat("MMM d");
+            Date date = new Date(System.currentTimeMillis() - (i * (24 * 60 * 60 * 1000)));
+            mBarChart.addBar(new BarModel(dt.format(date), (float) db.getAllStatsInOneDay(date).getVitesse(), 0xFF123456));
+        }
+        mBarChart.startAnimation();
+        mCubicValueLineChart = (ValueLineChart) getActivity().findViewById(R.id.cubiclinechart);
+        ValueLineSeries series = new ValueLineSeries();
+        series.setColor(0xFF56B7F1);
+        for (int i = 30; i >= 0; i--) {
+            SimpleDateFormat dt = new SimpleDateFormat("MMM d");
+            Date date = new Date(System.currentTimeMillis() - (i * (24 * 60 * 60 * 1000)));
+            series.addPoint(new ValueLinePoint(dt.format(date), (float) db.getAllStatsInOneDay(date).getVitesse()));
+        }
+        mCubicValueLineChart.addSeries(series);
+        mCubicValueLineChart.startAnimation();
+    }
+
+    private void showTemps() {
+        distance.setChecked(false);
+        temps.setChecked(true);
+        vitesse.setChecked(false);
+        for (int i = 6; i >= 0; i--) {
+            SimpleDateFormat dt = new SimpleDateFormat("MMM d");
+            Date date = new Date(System.currentTimeMillis() - (i * (24 * 60 * 60 * 1000)));
+            mBarChart.addBar(new BarModel(dt.format(date), (float) db.getAllStatsInOneDay(date).getTempsEcouler(), 0xFF123456));
+        }
+        mBarChart.startAnimation();
+        mCubicValueLineChart = (ValueLineChart) getActivity().findViewById(R.id.cubiclinechart);
+        ValueLineSeries series = new ValueLineSeries();
+        series.setColor(0xFF56B7F1);
+        for (int i = 30; i >= 0; i--) {
+            SimpleDateFormat dt = new SimpleDateFormat("MMM d");
+            Date date = new Date(System.currentTimeMillis() - (i * (24 * 60 * 60 * 1000)));
+            series.addPoint(new ValueLinePoint(dt.format(date), (float) db.getAllStatsInOneDay(date).getTempsEcouler()));
+        }
+        mCubicValueLineChart.addSeries(series);
+        mCubicValueLineChart.startAnimation();
+    }
+
+    private void clearGraphs() {
+        mBarChart.clearChart();
+        mCubicValueLineChart.clearChart();
     }
 
 }

@@ -34,6 +34,17 @@ public class Course {
         distanteParcourue = distanteParcourue + distance;
     }
 
+    public Course(double distanteParcourue, double objectif, double tempsEcouler, Date date, int nbrPas, double vitesse, Utils.COURSE_TYPE course_type) {
+        this.distanteParcourue = distanteParcourue;
+        this.objectif = objectif;
+        this.tempsEcouler = tempsEcouler;
+        this.date = date;
+        this.nbrPas = nbrPas;
+        this.vitesse = vitesse;
+        this.course_type = course_type;
+        state = StateCourse.EN_COURS;
+    }
+
     public Course() {
         state = StateCourse.EN_COURS;
     }
@@ -55,7 +66,11 @@ public class Course {
     }
 
     public double getVitesse() {
-        return distanteParcourue/Utils.getInstance().convertirEnHeure(tempsEcouler);
+        if (tempsEcouler != 0) {
+            return distanteParcourue / Utils.getInstance().convertirEnHeure(tempsEcouler);
+        } else {
+            return 0;
+        }
     }
 
     public double getPourcentageObjectifCompleter() {

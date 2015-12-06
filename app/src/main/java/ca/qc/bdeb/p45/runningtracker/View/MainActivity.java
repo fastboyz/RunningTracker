@@ -20,6 +20,7 @@ import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
+import ca.qc.bdeb.p45.runningtracker.BD.DBHelper;
 import ca.qc.bdeb.p45.runningtracker.R;
 
 public class MainActivity extends AppCompatActivity
@@ -108,7 +109,9 @@ public class MainActivity extends AppCompatActivity
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
             shareIntent.setType("*/*");
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "Run Tracker FTW");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "J'ai parcourue "
+                    + DBHelper.getInstance(this).getLastRunDistance()
+                    + " Km a l'aide de la super application \"Run Tracker\"");
             startActivity(Intent.createChooser(shareIntent, "Partager avec"));
         }
 
