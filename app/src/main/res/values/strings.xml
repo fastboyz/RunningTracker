@@ -36,6 +36,10 @@
     <string name="objectif_intro">Objectif de</string>
     <string name="titre_tableau_distance_semaine">Tableau des distance parcourue durant la dernière semaine</string>
     <string name="titre_tableau_distance_mois">Tableau des distance parcourue durant le dernier mois</string>
+    <string name="titre_tableau_Temps_semaine">Tableau des temps de course durant la dernière semaine</string>
+    <string name="titre_tableau_Temps_mois">Tableau des temps de course durant le dernier mois</string>
+    <string name="titre_tableau_Vitesse_semaine">Tableau des vitesse de course durant la dernière semaine</string>
+    <string name="titre_tableau_Vitesse_mois">Tableau des vitesse de course durant le dernier mois</string>
     <string name="distance">Distance</string>
     <string name="kmdefault">0.0 Km</string>
     <string name="date_final">Date finale</string>
@@ -44,4 +48,6 @@
     <string name="titre_pie_chart_objectif">Tableau des objectifs réussi</string>
     <string name="legende_objectif_reussi">Objectif réussi</string>
     <string name="legende_objectif_echouer">Objectif échoué</string>
+    <string name="temps">Temps</string>
+    <string name="vitesse">Vitesse</string>
 </resources>

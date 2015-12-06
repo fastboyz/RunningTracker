@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/titre_tableau_distance_semaine"
-        android:id="@+id/textView4"
+        android:id="@+id/Statistique_TextView_TitreSemaine"
         android:gravity="center"
         android:layout_weight="1"
         android:lines="2" />
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/titre_tableau_distance_mois"
-        android:id="@+id/titre_tableau_distance_mois"
+        android:id="@+id/Statistique_TextView_TitreMois"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
         android:gravity="center_horizontal" />
@@ -61,8 +61,8 @@
             android:layout_height="wrap_content"
             android:text="New ToggleButton"
             android:id="@+id/statistiques_toggleButton_Distance"
-            android:textOff="Distance"
-            android:textOn="Distance"
+            android:textOff="@string/distance"
+            android:textOn="@string/distance"
             android:layout_weight="1" />
 
         <ToggleButton
@@ -70,16 +70,16 @@
             android:layout_height="wrap_content"
             android:text="New ToggleButton"
             android:id="@+id/statistiques_toggleButton_Temps"
-            android:textOff="Temps"
-            android:textOn="Temps"
+            android:textOff="@string/temps"
+            android:textOn="@string/temps"
             android:layout_weight="1" />
 
         <ToggleButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New ToggleButton"
-            android:textOff="Vitesse"
-            android:textOn="Vitesse"
+            android:textOff="@string/vitesse"
+            android:textOn="@string/vitesse"
             android:id="@+id/statistiques_toggleButton_Vitesse"
             android:layout_weight="1" />
     </LinearLayout>

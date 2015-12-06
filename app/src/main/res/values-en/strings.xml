@@ -26,6 +26,12 @@
     <string name="distance">Distance</string>
     <string name="legende_objectif_echouer">Goal failed</string>
     <string name="legende_objectif_reussi">Goal succeeded</string>
-    <string name="nouvel_objectif">new goal</string>
+    <string name="nouvel_objectif">New goal</string>
     <string name="titre_pie_chart_objectif">Table of succeeded goals</string>
+    <string name="vitesse">Speed</string>
+    <string name="temps">Time</string>
+    <string name="titre_tableau_Vitesse_semaine">Table of running speed during the last week</string>
+    <string name="titre_tableau_Vitesse_mois">Table of running speed during the last month</string>
+    <string name="titre_tableau_Temps_semaine">Table of running time during the last week</string>
+    <string name="titre_tableau_Temps_mois">Table of running time during the last month</string>
 </resources>

@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import org.eazegraph.lib.charts.BarChart;
@@ -40,6 +41,8 @@ public class Statistiques extends Fragment {
     private ToggleButton vitesse;
     private BarChart mBarChart;
     private ValueLineChart mCubicValueLineChart;
+    private TextView titreSemaine;
+    private TextView titreMois;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -135,6 +138,8 @@ public class Statistiques extends Fragment {
         distance = (ToggleButton) getActivity().findViewById(R.id.statistiques_toggleButton_Distance);
         temps = (ToggleButton) getActivity().findViewById(R.id.statistiques_toggleButton_Temps);
         vitesse = (ToggleButton) getActivity().findViewById(R.id.statistiques_toggleButton_Vitesse);
+        titreSemaine = (TextView) getActivity().findViewById(R.id.Statistique_TextView_TitreSemaine);
+        titreMois = (TextView) getActivity().findViewById(R.id.Statistique_TextView_TitreMois);
         // Une bar par jour
         showDistance();
         distance.setOnClickListener(new View.OnClickListener() {
@@ -161,6 +166,8 @@ public class Statistiques extends Fragment {
     }
 
     private void showDistance() {
+        titreSemaine.setText(getString(R.string.titre_tableau_distance_semaine));
+        titreMois.setText(getString(R.string.titre_tableau_distance_mois));
         distance.setChecked(true);
         temps.setChecked(false);
         vitesse.setChecked(false);
@@ -183,6 +190,8 @@ public class Statistiques extends Fragment {
     }
 
     private void showVitesse() {
+        titreSemaine.setText(getString(R.string.titre_tableau_Vitesse_semaine));
+        titreMois.setText(getString(R.string.titre_tableau_Vitesse_mois));
         distance.setChecked(false);
         temps.setChecked(false);
         vitesse.setChecked(true);
@@ -205,6 +214,8 @@ public class Statistiques extends Fragment {
     }
 
     private void showTemps() {
+        titreSemaine.setText(getString(R.string.titre_tableau_Temps_semaine));
+        titreMois.setText(getString(R.string.titre_tableau_Temps_mois));
         distance.setChecked(false);
         temps.setChecked(true);
         vitesse.setChecked(false);

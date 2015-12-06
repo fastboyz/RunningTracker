@@ -11,6 +11,7 @@ import org.w3c.dom.ProcessingInstruction;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 import ca.qc.bdeb.p45.runningtracker.Common.Utils;
 import ca.qc.bdeb.p45.runningtracker.Modele.Course;
@@ -86,7 +87,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         // Création de donné test durant la semaine passé
         for (int i = 6; i >= 0; i--) {
-            creerCourseTest(db, new Course(6.2 * (i * 0.1), 5 * (i * 0.1), 154.25 * (i * 0.1),
+            Random random = new Random();
+            creerCourseTest(db, new Course(6.2 * (random.nextInt(5) + 1) * 0.1, 5 * (random.nextInt(5) + 1) * 0.1, 154.25 * (random.nextInt(5) + 1) * 0.1,
                     new Date(System.currentTimeMillis() - (i * (24 * 60 * 60 * 1000))), 666, 5.3,
                     Utils.COURSE_TYPE.PIEDS));
         }
@@ -214,7 +216,11 @@ public class DBHelper extends SQLiteOpenHelper {
             long diffDaysToday = diffTime / (1000 * 60 * 60 * 24);
             double diffDistance = distanceFinal - initial;
             double distanceParJour = diffDistance/diffDaysTotal;
-            objectif.setOBJECTIF_DISTANCE((int)(initial + (distanceParJour*diffDaysToday)));
+            if (diffDaysTotal > diffDaysToday) {
+                objectif.setOBJECTIF_DISTANCE((int) (initial + (distanceParJour * diffDaysToday)));
+            } else {
+                objectif.setOBJECTIF_DISTANCE((int) distanceFinal);
+            }
             objectif.setOBJECTIF_DISTANCE_Final(distanceFinal);
         }
 //        + OBJECTIF_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
