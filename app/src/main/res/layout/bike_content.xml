@@ -82,9 +82,9 @@
         android:id="@+id/BikeFragment_btnStartStop"
         android:textOn="@string/stop"
         android:textOff="@string/start"
-        android:layout_below="@+id/view"
-        android:layout_toRightOf="@+id/MainActivity_objective_bike"
-        android:layout_toEndOf="@+id/MainActivity_objective_bike" />
+        android:layout_below="@+id/BikeFragment_inContent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/textView3"

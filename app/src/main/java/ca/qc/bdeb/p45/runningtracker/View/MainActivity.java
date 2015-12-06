@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.Menu_historique) {
 
         } else if ( id == R.id.Menu_objectif) {
-
+            fragmentClass = Objectif.class;
         } else if (id == R.id.Menu_Statistique) {
             fragmentClass = Statistiques.class;
         } else if (id == R.id.nav_share) {

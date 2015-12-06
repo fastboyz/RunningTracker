@@ -19,7 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import ca.qc.bdeb.p45.runningtracker.BD.DBHelper;
-import ca.qc.bdeb.p45.runningtracker.Modele.Course;
 import ca.qc.bdeb.p45.runningtracker.R;
 
 /**

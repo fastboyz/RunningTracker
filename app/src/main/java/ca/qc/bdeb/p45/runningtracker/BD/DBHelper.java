@@ -171,13 +171,14 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public double getPourcentageObjectifAccomplie() {
+    public float getPourcentageObjectifAccomplie() {
         SQLiteDatabase db = this.getReadableDatabase();
         long nbrObjectifRéussi = DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM "
                 + TABLE_NOM_COURSE + " where " + COURSE_DISTANCE + " > "
                 + COURSE_DISTANCE_OBJECTIF + ";", null);
-        long numRows = DatabaseUtils.queryNumEntries(db, "table_name");
-        return (nbrObjectifRéussi / numRows) * 100;
+        long numRows = DatabaseUtils.queryNumEntries(db, TABLE_NOM_COURSE);
+        float pourcentage = (nbrObjectifRéussi*100)/numRows;
+        return pourcentage;
     }
 
     public double getLastRunDistance() {

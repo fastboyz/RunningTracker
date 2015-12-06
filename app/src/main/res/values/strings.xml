@@ -36,4 +36,12 @@
     <string name="objectif_intro">Objectif de</string>
     <string name="titre_tableau_distance_semaine">Tableau des distance parcourue durant la dernière semaine</string>
     <string name="titre_tableau_distance_mois">Tableau des distance parcourue durant le dernier mois</string>
+    <string name="distance" translatable="false">Distance</string>
+    <string name="kmdefault">0.0 Km</string>
+    <string name="date_final">Date finale</string>
+    <string name="date_default">Dec 9 2015</string>
+    <string name="nouvel_objectif">Nouvel objectif</string>
+    <string name="titre_pie_chart_objectif">Tableau des objectifs réussi</string>
+    <string name="legende_objectif_reussi">Objectif réussi</string>
+    <string name="legende_objectif_echouer">Objectif échoué</string>
 </resources>
