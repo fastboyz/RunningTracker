@@ -165,7 +165,7 @@ public class Bike extends Fragment implements OnMapReadyCallback {
         distanceVoyager.setText("0.00 Km");
         speed = (TextView) getActivity().findViewById(R.id.MainActivity_Speed_bike);
         objectif = (TextView) getActivity().findViewById(R.id.MainActivity_objective_bike);
-        objectif.setText(" " + DBHelper.getInstance(getActivity()).getCurrentObjectif() + " Km");
+        objectif.setText(" " + DBHelper.getInstance(getActivity()).getCurrentObjectif().getOBJECTIF_DISTANCE() + " Km");
         startStop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             LatLng pos;
 

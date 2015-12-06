@@ -25,7 +25,7 @@
 
     <TextView
         android:id="@+id/MainActivity_objective_bike"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
@@ -35,7 +35,8 @@
         android:textSize="15sp"
         android:layout_alignTop="@+id/textView3"
         android:layout_toRightOf="@+id/textView3"
-        android:layout_toEndOf="@+id/textView3" />
+        android:layout_toEndOf="@+id/textView3"
+        android:gravity="left" />
 
     <com.daimajia.numberprogressbar.NumberProgressBar
         android:id="@+id/BikeFragment_progess"

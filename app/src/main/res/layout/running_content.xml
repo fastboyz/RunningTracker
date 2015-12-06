@@ -34,7 +34,8 @@
         android:textSize="15sp"
         android:layout_below="@+id/MainActivity_traveled"
         android:layout_toRightOf="@+id/textView2"
-        android:layout_toEndOf="@+id/textView2" />
+        android:layout_toEndOf="@+id/textView2"
+        android:gravity="left" />
 
     <com.daimajia.numberprogressbar.NumberProgressBar
         android:id="@+id/MainActivity_progess"

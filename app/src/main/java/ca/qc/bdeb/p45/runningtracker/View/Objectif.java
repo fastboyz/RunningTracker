@@ -16,6 +16,9 @@ import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
 import android.graphics.Color;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import ca.qc.bdeb.p45.runningtracker.BD.DBHelper;
 import ca.qc.bdeb.p45.runningtracker.R;
 
@@ -139,7 +142,10 @@ public class Objectif extends Fragment {
         layoutParams.width = mDisplay.getWidth();
 
         float objectifReusi = db.getPourcentageObjectifAccomplie();
-
+        distance.setText("" + db.getCurrentObjectif().getOBJECTIF_DISTANCE_Final() + " Km");
+        SimpleDateFormat dt = new SimpleDateFormat("d MMM yyyy");
+        Date dateFinale = db.getCurrentObjectif().getOBJECTIF_DATE_FINAL();
+        date.setText("" + dt.format(dateFinale));
         mPieChart.addPieSlice(new PieModel("Objectif réussi",
                 (float) objectifReusi,
                 Color.parseColor("#EE7600")));

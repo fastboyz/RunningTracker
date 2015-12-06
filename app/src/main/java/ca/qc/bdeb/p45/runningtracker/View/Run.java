@@ -136,8 +136,7 @@ public class Run extends Fragment implements OnMapReadyCallback {
         distanceVoyager = (TextView) getActivity().findViewById(R.id.MainActivity_traveled);
         distanceVoyager.setText("0.00 Km");
         objectif = (TextView) getActivity().findViewById(R.id.MainActivity_objective);
-        objectif.setText(" " + DBHelper.getInstance(getActivity()).getCurrentObjectif() + " Km");
-
+        objectif.setText(" " + DBHelper.getInstance(getActivity()).getCurrentObjectif().getOBJECTIF_DISTANCE() + " Km");
         speed = (TextView) getActivity().findViewById(R.id.MainActivity_Speed);
         startStop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             LatLng pos;
@@ -151,7 +150,7 @@ public class Run extends Fragment implements OnMapReadyCallback {
                         distanceVoyager.setText(R.string.distanceVoyagerInitiale);
                     }
                     course = new Course();
-                    course.setObjectif(DBHelper.getInstance(getActivity()).getCurrentObjectif());
+                    course.setObjectif(DBHelper.getInstance(getActivity()).getCurrentObjectif().getOBJECTIF_DISTANCE());
                     chronometre.setBase(SystemClock.elapsedRealtime());
                     chronometre.start();
                     initialiserCourse();

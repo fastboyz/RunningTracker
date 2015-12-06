@@ -14,6 +14,7 @@ import java.util.Date;
 
 import ca.qc.bdeb.p45.runningtracker.Common.Utils;
 import ca.qc.bdeb.p45.runningtracker.Modele.Course;
+import ca.qc.bdeb.p45.runningtracker.Modele.Objectif;
 
 /**
  * Created by 1345280 on 2015-11-25.
@@ -125,10 +126,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void creerObjectifInitial(SQLiteDatabase db) {
         ContentValues values = new ContentValues();
-        values.put(OBJECTIF_INITIALE, 0);
-        values.put(OBJECTIF_DISTANCE, 0);
-        values.put(OBJECTIF_DATE_FINAL, 0);
-        values.put(OBJECTIF_DATE_COMMENCEMENT, 0);
+        values.put(OBJECTIF_INITIALE, 5);
+        values.put(OBJECTIF_DISTANCE, 42);
+        values.put(OBJECTIF_DATE_FINAL, new Date().getTime()+ (6*(24 * 60 * 60 * 1000)));
+        values.put(OBJECTIF_DATE_COMMENCEMENT, new Date().getTime());
         long id = db.insert(TABLE_NOM_OBJECTIF, null, values);
     }
 
@@ -193,18 +194,35 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public double getCurrentObjectif() {
+    public Objectif getCurrentObjectif() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_NOM_OBJECTIF + " where " + OBJECTIF_ID
                 + " = (SELECT MAX(" + OBJECTIF_ID + ") FROM " + TABLE_NOM_OBJECTIF + ")" + ";", null);
+        Objectif objectif = new Objectif();
         if (cursor != null) {
             cursor.moveToFirst();
+            objectif.setOBJECTIF_DATE_COMMENCEMENT(new Date(cursor.getLong(4)));
+            objectif.setOBJECTIF_DATE_FINAL(new Date(cursor.getLong(3)));
             double initial = cursor.getDouble(1);
-            double distanceFinal = cursor.getDouble(1);
-            return distanceFinal;
-        } else {
-            return -1;
+            double distanceFinal = cursor.getDouble(2);
+            long startTime = cursor.getLong(4);
+            long endTime = cursor.getLong(3);
+            long todayTime = System.currentTimeMillis();
+            long diffTime = endTime - startTime;
+            long diffDaysTotal = diffTime / (1000 * 60 * 60 * 24);
+            diffTime = todayTime - startTime;
+            long diffDaysToday = diffTime / (1000 * 60 * 60 * 24);
+            double diffDistance = distanceFinal - initial;
+            double distanceParJour = diffDistance/diffDaysTotal;
+            objectif.setOBJECTIF_DISTANCE((int)(initial + (distanceParJour*diffDaysToday)));
+            objectif.setOBJECTIF_DISTANCE_Final(distanceFinal);
         }
+//        + OBJECTIF_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+//                + OBJECTIF_INITIALE + " REAL, "
+//                + OBJECTIF_DISTANCE + " REAL, "
+//                + OBJECTIF_DATE_FINAL + " LONG, "
+//                + OBJECTIF_DATE_COMMENCEMENT + " LONG)";
+        return objectif;
     }
 
     public ArrayList<Course> getLasMonthRuns() {
