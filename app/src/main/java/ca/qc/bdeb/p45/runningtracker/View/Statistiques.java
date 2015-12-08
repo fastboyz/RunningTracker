@@ -222,7 +222,7 @@ public class Statistiques extends Fragment {
         for (int i = 6; i >= 0; i--) {
             SimpleDateFormat dt = new SimpleDateFormat("MMM d");
             Date date = new Date(System.currentTimeMillis() - (i * (24 * 60 * 60 * 1000)));
-            mBarChart.addBar(new BarModel(dt.format(date), (float) db.getAllStatsInOneDay(date).getTempsEcouler(), 0xFF123456));
+            mBarChart.addBar(new BarModel(dt.format(date), (float) (db.getAllStatsInOneDay(date).getTempsEcouler()/(60*100)), 0xFF123456));
         }
         mBarChart.startAnimation();
         mCubicValueLineChart = (ValueLineChart) getActivity().findViewById(R.id.cubiclinechart);
@@ -231,7 +231,7 @@ public class Statistiques extends Fragment {
         for (int i = 30; i >= 0; i--) {
             SimpleDateFormat dt = new SimpleDateFormat("MMM d");
             Date date = new Date(System.currentTimeMillis() - (i * (24 * 60 * 60 * 1000)));
-            series.addPoint(new ValueLinePoint(dt.format(date), (float) db.getAllStatsInOneDay(date).getTempsEcouler()));
+            series.addPoint(new ValueLinePoint(dt.format(date), (float) (db.getAllStatsInOneDay(date).getTempsEcouler()/(60*100))));
         }
         mCubicValueLineChart.addSeries(series);
         mCubicValueLineChart.startAnimation();

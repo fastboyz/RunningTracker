@@ -71,7 +71,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 + COURSE_NBR_PAS + " INTEGER, "
                 + COURSE_DATE + " LONG, "
                 + COURSE_TYPE + " INTEGER, "
-                + COURSE_TEMPS + " REAL)";
+                + COURSE_TEMPS + " LONG)";
         db.execSQL(sqlClient);
 
         sqlClient = "CREATE TABLE " + TABLE_NOM_OBJECTIF + "("

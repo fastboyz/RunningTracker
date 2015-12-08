@@ -1,6 +1,7 @@
 package ca.qc.bdeb.p45.runningtracker.View;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -136,6 +137,14 @@ public class Objectif extends Fragment {
         date = (TextView) getActivity().findViewById(R.id.Objectif_TexteView_Date);
         mPieChart = (PieChart) getActivity().findViewById(R.id.Objectif_piechart);
         newButton = (Button) getActivity().findViewById(R.id.Objectif_Button_new);
+
+        newButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentNewObjectif = new Intent(getActivity(), Nouvel_Objectif.class);
+                startActivity(intentNewObjectif);
+            }
+        });
 
         PieChart.LayoutParams layoutParams = mPieChart.getLayoutParams();
         Display mDisplay = getActivity().getWindowManager().getDefaultDisplay();
