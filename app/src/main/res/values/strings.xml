@@ -50,4 +50,7 @@
     <string name="legende_objectif_echouer">Objectif échoué</string>
     <string name="temps">Temps</string>
     <string name="vitesse">Vitesse</string>
+    <string name="title_activity_nouvel__objectif">Nouvel_Objectif</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>
