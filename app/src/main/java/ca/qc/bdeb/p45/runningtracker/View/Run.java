@@ -29,7 +29,8 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import ca.qc.bdeb.p45.runningtracker.BD.DBHelper;
 import ca.qc.bdeb.p45.runningtracker.Common.StateCourse;
 import ca.qc.bdeb.p45.runningtracker.Common.Utils;
-import ca.qc.bdeb.p45.runningtracker.Modele.Course;
+import ca.qc.bdeb.p45.runningtracker.Modele.*;
+import ca.qc.bdeb.p45.runningtracker.Modele.Objectif;
 import ca.qc.bdeb.p45.runningtracker.R;
 
 /**
@@ -57,7 +58,10 @@ public class Run extends Fragment implements OnMapReadyCallback {
     private TextView distanceVoyager;
     private Chronometer chronometre;
     private TextView speed;
-    private TextView objectif;
+    private DBHelper helper;
+    private TextView lblObjectif;
+    private Objectif objectif;
+    NumberProgressBar nbp;
 
     private OnFragmentInteractionListener mListener;
 
@@ -124,10 +128,11 @@ public class Run extends Fragment implements OnMapReadyCallback {
 
 
     private void initialise() {
+        helper = DBHelper.getInstance(getContext());
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById((R.id.map));
-
+        objectif = helper.getCurrentObjectif();
         mapFragment.getMapAsync(this);
-        NumberProgressBar nbp = (NumberProgressBar) getActivity().findViewById(R.id.MainActivity_progess);
+        nbp = (NumberProgressBar) getActivity().findViewById(R.id.MainActivity_progess);
         nbp.setMax(100);
         nbp.setProgress(0);
         chronometre = (Chronometer) getActivity().findViewById(R.id.MainActivity_time);
@@ -135,8 +140,8 @@ public class Run extends Fragment implements OnMapReadyCallback {
         ToggleButton startStop = (ToggleButton) getActivity().findViewById(R.id.MainActivity_btnStartStop);
         distanceVoyager = (TextView) getActivity().findViewById(R.id.MainActivity_traveled);
         distanceVoyager.setText("0.00 Km");
-        objectif = (TextView) getActivity().findViewById(R.id.MainActivity_objective);
-        objectif.setText(" " + DBHelper.getInstance(getActivity()).getCurrentObjectif().getOBJECTIF_DISTANCE() + " Km");
+        lblObjectif = (TextView) getActivity().findViewById(R.id.MainActivity_objective);
+        lblObjectif.setText(String.format(" %d Km", objectif.getOBJECTIF_DISTANCE()));
         speed = (TextView) getActivity().findViewById(R.id.MainActivity_Speed);
         startStop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             LatLng pos;
@@ -145,12 +150,12 @@ public class Run extends Fragment implements OnMapReadyCallback {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     if (course != null) {
-                        //TODO save the current course
                         mMap.clear();
                         distanceVoyager.setText(R.string.distanceVoyagerInitiale);
                     }
                     course = new Course();
                     course.setObjectif(DBHelper.getInstance(getActivity()).getCurrentObjectif().getOBJECTIF_DISTANCE());
+                    course.setCourse_type(Utils.COURSE_TYPE.PIEDS);
                     chronometre.setBase(SystemClock.elapsedRealtime());
                     chronometre.start();
                     initialiserCourse();
@@ -164,6 +169,7 @@ public class Run extends Fragment implements OnMapReadyCallback {
                     course.changeState();
                     chronometre.stop();
                     course.setTempsEcouler(SystemClock.elapsedRealtime() - chronometre.getBase());
+                    helper.ajouterCourse(course);
                 }
             }
 
@@ -194,6 +200,9 @@ public class Run extends Fragment implements OnMapReadyCallback {
                 speed.setText(String.format("%s%s", Utils.getInstance()
                         .formatDecimal(course.getVitesse()), getString(R.string.unite_vitesse)));
                 lastKnownPos = newPos;
+                nbp.animate();
+                nbp.setProgress(Utils.getInstance().calculerPourcentageFini(course.getDistanteParcourue()
+                        , objectif.getOBJECTIF_DISTANCE()));
             }
         }
     }

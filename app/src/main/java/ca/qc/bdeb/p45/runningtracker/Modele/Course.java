@@ -1,10 +1,7 @@
 package ca.qc.bdeb.p45.runningtracker.Modele;
 
-import android.content.Context;
 
 import java.util.Date;
-
-import ca.qc.bdeb.p45.runningtracker.BD.DBHelper;
 import ca.qc.bdeb.p45.runningtracker.Common.StateCourse;
 import ca.qc.bdeb.p45.runningtracker.Common.Utils;
 
@@ -47,6 +44,7 @@ public class Course {
 
     public Course() {
         state = StateCourse.EN_COURS;
+        date = new Date();
     }
 
     public void changeState(){

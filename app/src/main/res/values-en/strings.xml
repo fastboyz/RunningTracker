@@ -15,9 +15,8 @@
     <string name="stop">Stop</string>
     <string name="communication">Communication</string>
     <string name="Objective">Objectif of </string>
-    <string name="distanceVoyagerInitiale"></string>
-    <string name="google_maps_key" translatable="false"></string>
-    <string name="hello_blank_fragment"></string>
+    <string name="distanceVoyagerInitiale">0 Km</string>
+    <string name="hello_blank_fragment">hi</string>
     <string name="Bike">Bicycle</string>
     <string name="objectif_intro">Target of</string>
     <string name="titre_tableau_distance_mois">Table of distance traveled in the last month</string>

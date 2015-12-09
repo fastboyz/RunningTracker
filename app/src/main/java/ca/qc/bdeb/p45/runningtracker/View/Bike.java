@@ -58,6 +58,7 @@ public class Bike extends Fragment implements OnMapReadyCallback {
     private Chronometer chronometre;
     private TextView speed;
     private TextView objectif;
+    private DBHelper helper;
 
 
     private OnFragmentInteractionListener mListener;
@@ -152,6 +153,7 @@ public class Bike extends Fragment implements OnMapReadyCallback {
     }
 
     private void initialise() {
+        helper = DBHelper.getInstance(getContext());
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById((R.id.map));
 
         mapFragment.getMapAsync(this);
@@ -173,11 +175,11 @@ public class Bike extends Fragment implements OnMapReadyCallback {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     if (course != null) {
-                        //TODO save the current course
                         mMap.clear();
                         distanceVoyager.setText(R.string.distanceVoyagerInitiale);
                     }
                     course = new Course();
+                    course.setCourse_type(Utils.COURSE_TYPE.VELO);
                     chronometre.setBase(SystemClock.elapsedRealtime());
                     chronometre.start();
                     initialiserCourse();
@@ -191,6 +193,7 @@ public class Bike extends Fragment implements OnMapReadyCallback {
                     course.changeState();
                     chronometre.stop();
                     course.setTempsEcouler(SystemClock.elapsedRealtime() - chronometre.getBase());
+                    helper.ajouterCourse(course);
                 }
             }
 

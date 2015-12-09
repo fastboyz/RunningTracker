@@ -55,4 +55,13 @@ public class Utils {
     public double convertirEnHeure(double temp){
         return (temp / (1000*60*60));
     }
+
+    public int calculerPourcentageFini(double distanceParcourue, int distanceObjectif){
+
+        int pourcentage = (int) ((distanceParcourue*100)/distanceObjectif);
+        if (pourcentage <100){
+            return pourcentage;
+        }
+        return 100;
+    }
 }
