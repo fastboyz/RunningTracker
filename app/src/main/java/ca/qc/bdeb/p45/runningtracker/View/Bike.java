@@ -29,7 +29,8 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import ca.qc.bdeb.p45.runningtracker.BD.DBHelper;
 import ca.qc.bdeb.p45.runningtracker.Common.StateCourse;
 import ca.qc.bdeb.p45.runningtracker.Common.Utils;
-import ca.qc.bdeb.p45.runningtracker.Modele.Course;
+import ca.qc.bdeb.p45.runningtracker.Modele.*;
+import ca.qc.bdeb.p45.runningtracker.Modele.Objectif;
 import ca.qc.bdeb.p45.runningtracker.R;
 
 /**
@@ -57,9 +58,10 @@ public class Bike extends Fragment implements OnMapReadyCallback {
     private TextView distanceVoyager;
     private Chronometer chronometre;
     private TextView speed;
-    private TextView objectif;
+    private TextView lblObjectif;
     private DBHelper helper;
-
+    private  Objectif objectif;
+    NumberProgressBar nbp;
 
     private OnFragmentInteractionListener mListener;
 
@@ -155,9 +157,9 @@ public class Bike extends Fragment implements OnMapReadyCallback {
     private void initialise() {
         helper = DBHelper.getInstance(getContext());
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById((R.id.map));
-
+        objectif = helper.getCurrentObjectif();
         mapFragment.getMapAsync(this);
-        NumberProgressBar nbp = (NumberProgressBar) getActivity().findViewById(R.id.BikeFragment_progess);
+        nbp = (NumberProgressBar) getActivity().findViewById(R.id.BikeFragment_progess);
         nbp.setMax(100);
         nbp.setProgress(0);
         chronometre = (Chronometer) getActivity().findViewById(R.id.MainActivity_time_bike);
@@ -166,8 +168,8 @@ public class Bike extends Fragment implements OnMapReadyCallback {
         distanceVoyager = (TextView) getActivity().findViewById(R.id.MainActivity_traveled_bike);
         distanceVoyager.setText("0.00 Km");
         speed = (TextView) getActivity().findViewById(R.id.MainActivity_Speed_bike);
-        objectif = (TextView) getActivity().findViewById(R.id.MainActivity_objective_bike);
-        objectif.setText(" " + DBHelper.getInstance(getActivity()).getCurrentObjectif().getOBJECTIF_DISTANCE() + " Km");
+        lblObjectif = (TextView) getActivity().findViewById(R.id.MainActivity_objective_bike);
+        lblObjectif.setText(String.format(" %d Km", objectif.getOBJECTIF_DISTANCE()));
         startStop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             LatLng pos;
 
@@ -224,6 +226,8 @@ public class Bike extends Fragment implements OnMapReadyCallback {
                 speed.setText(String.format("%s%s", Utils.getInstance()
                         .formatDecimal(course.getVitesse()), getString(R.string.unite_vitesse)));
                 lastKnownPos = newPos;
+                nbp.setProgress(Utils.getInstance().calculerPourcentageFini(course.getDistanteParcourue()
+                        , objectif.getOBJECTIF_DISTANCE()));
             }
         }
     }

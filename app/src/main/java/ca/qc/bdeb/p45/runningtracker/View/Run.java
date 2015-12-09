@@ -200,7 +200,6 @@ public class Run extends Fragment implements OnMapReadyCallback {
                 speed.setText(String.format("%s%s", Utils.getInstance()
                         .formatDecimal(course.getVitesse()), getString(R.string.unite_vitesse)));
                 lastKnownPos = newPos;
-                nbp.animate();
                 nbp.setProgress(Utils.getInstance().calculerPourcentageFini(course.getDistanteParcourue()
                         , objectif.getOBJECTIF_DISTANCE()));
             }
