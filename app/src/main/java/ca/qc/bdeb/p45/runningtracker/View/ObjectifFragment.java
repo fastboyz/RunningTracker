@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import org.eazegraph.lib.charts.PieChart;
@@ -26,12 +25,12 @@ import ca.qc.bdeb.p45.runningtracker.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Objectif.OnFragmentInteractionListener} interface
+ * {@link ObjectifFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Objectif#newInstance} factory method to
+ * Use the {@link ObjectifFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Objectif extends Fragment {
+public class ObjectifFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -55,11 +54,11 @@ public class Objectif extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Objectif.
+     * @return A new instance of fragment .
      */
     // TODO: Rename and change types and number of parameters
-    public static Objectif newInstance(String param1, String param2) {
-        Objectif fragment = new Objectif();
+    public static ObjectifFragment newInstance(String param1, String param2) {
+        ObjectifFragment fragment = new ObjectifFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -67,7 +66,7 @@ public class Objectif extends Fragment {
         return fragment;
     }
 
-    public Objectif() {
+    public ObjectifFragment() {
         // Required empty public constructor
     }
 
@@ -143,6 +142,7 @@ public class Objectif extends Fragment {
             public void onClick(View v) {
                 Intent intentNewObjectif = new Intent(getActivity(), Nouvel_Objectif.class);
                 startActivity(intentNewObjectif);
+                initialise();
             }
         });
 
@@ -151,14 +151,14 @@ public class Objectif extends Fragment {
         layoutParams.width = mDisplay.getWidth();
 
         float objectifReusi = db.getPourcentageObjectifAccomplie();
-        distance.setText("" + db.getCurrentObjectif().getOBJECTIF_DISTANCE_Final() + " Km");
+        distance.setText("" + db.getCurrentObjectif().getObjectifFinale() + " Km");
         SimpleDateFormat dt = new SimpleDateFormat("d MMM yyyy");
-        Date dateFinale = db.getCurrentObjectif().getOBJECTIF_DATE_FINAL();
+        Date dateFinale = db.getCurrentObjectif().getObjectifDateFinal();
         date.setText("" + dt.format(dateFinale));
-        mPieChart.addPieSlice(new PieModel("Objectif réussi",
+        mPieChart.addPieSlice(new PieModel("Objectifs réussis",
                 (float) objectifReusi,
                 Color.parseColor("#EE7600")));
-        mPieChart.addPieSlice(new PieModel("Objectif échouer",
+        mPieChart.addPieSlice(new PieModel("Objectifs échouer",
                 (float) (100 - objectifReusi),
                 Color.parseColor("#56B7F1")));
         mPieChart.startAnimation();

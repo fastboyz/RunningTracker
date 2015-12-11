@@ -7,8 +7,6 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import org.w3c.dom.ProcessingInstruction;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
@@ -42,7 +40,7 @@ public class DBHelper extends SQLiteOpenHelper {
     // Noms de colonnes
     private static final String OBJECTIF_ID = "_id";
     private static final String OBJECTIF_INITIALE = "DISTANCE_INITIALE";
-    private static final String OBJECTIF_DISTANCE = "DISTANCE";
+    private static final String OBJECTIF_FINALE = "DISTANCE";
     private static final String OBJECTIF_DATE_FINAL = "VITESSE";
     private static final String OBJECTIF_DATE_COMMENCEMENT = "NBR_PAS";
 
@@ -77,7 +75,7 @@ public class DBHelper extends SQLiteOpenHelper {
         sqlClient = "CREATE TABLE " + TABLE_NOM_OBJECTIF + "("
                 + OBJECTIF_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + OBJECTIF_INITIALE + " REAL, "
-                + OBJECTIF_DISTANCE + " REAL, "
+                + OBJECTIF_FINALE + " REAL, "
                 + OBJECTIF_DATE_FINAL + " LONG, "
                 + OBJECTIF_DATE_COMMENCEMENT + " LONG)";
         db.execSQL(sqlClient);
@@ -129,7 +127,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void creerObjectifInitial(SQLiteDatabase db) {
         ContentValues values = new ContentValues();
         values.put(OBJECTIF_INITIALE, 5);
-        values.put(OBJECTIF_DISTANCE, 42);
+        values.put(OBJECTIF_FINALE, 42);
         values.put(OBJECTIF_DATE_FINAL, new Date().getTime()+ (6*(24 * 60 * 60 * 1000)));
         values.put(OBJECTIF_DATE_COMMENCEMENT, new Date().getTime());
         long id = db.insert(TABLE_NOM_OBJECTIF, null, values);
@@ -174,6 +172,17 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void ajouterObjectif(Objectif objectif) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(OBJECTIF_INITIALE, objectif.getObjectifInitiale());
+        values.put(OBJECTIF_FINALE, objectif.getObjectifFinale());
+        values.put(OBJECTIF_DATE_FINAL, objectif.getObjectifDateFinal().getTime());
+        values.put(OBJECTIF_DATE_COMMENCEMENT, objectif.getObjectifDateCommencement().getTime());
+        long id = db.insert(TABLE_NOM_OBJECTIF, null, values);
+        db.close();
+    }
+
     public float getPourcentageObjectifAccomplie() {
         SQLiteDatabase db = this.getReadableDatabase();
         long nbrObjectifRéussi = DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM "
@@ -203,8 +212,8 @@ public class DBHelper extends SQLiteOpenHelper {
         Objectif objectif = new Objectif();
         if (cursor != null) {
             cursor.moveToFirst();
-            objectif.setOBJECTIF_DATE_COMMENCEMENT(new Date(cursor.getLong(4)));
-            objectif.setOBJECTIF_DATE_FINAL(new Date(cursor.getLong(3)));
+            objectif.setObjectifDateCommencement(new Date(cursor.getLong(4)));
+            objectif.setObjectifDateFinal(new Date(cursor.getLong(3)));
             double initial = cursor.getDouble(1);
             double distanceFinal = cursor.getDouble(2);
             long startTime = cursor.getLong(4);
@@ -217,15 +226,15 @@ public class DBHelper extends SQLiteOpenHelper {
             double diffDistance = distanceFinal - initial;
             double distanceParJour = diffDistance/diffDaysTotal;
             if (diffDaysTotal > diffDaysToday) {
-                objectif.setOBJECTIF_DISTANCE((int) (initial + (distanceParJour * diffDaysToday)));
+                objectif.setObjectifCourrent((int) (initial + (distanceParJour * diffDaysToday)));
             } else {
-                objectif.setOBJECTIF_DISTANCE((int) distanceFinal);
+                objectif.setObjectifCourrent((int) distanceFinal);
             }
-            objectif.setOBJECTIF_DISTANCE_Final(distanceFinal);
+            objectif.setObjectifFinale(distanceFinal);
         }
 //        + OBJECTIF_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
 //                + OBJECTIF_INITIALE + " REAL, "
-//                + OBJECTIF_DISTANCE + " REAL, "
+//                + OBJECTIF_FINALE + " REAL, "
 //                + OBJECTIF_DATE_FINAL + " LONG, "
 //                + OBJECTIF_DATE_COMMENCEMENT + " LONG)";
         return objectif;

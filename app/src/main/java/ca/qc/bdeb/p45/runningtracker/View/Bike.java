@@ -169,7 +169,7 @@ public class Bike extends Fragment implements OnMapReadyCallback {
         distanceVoyager.setText("0.00 Km");
         speed = (TextView) getActivity().findViewById(R.id.MainActivity_Speed_bike);
         lblObjectif = (TextView) getActivity().findViewById(R.id.MainActivity_objective_bike);
-        lblObjectif.setText(String.format(" %d Km", objectif.getOBJECTIF_DISTANCE()));
+        lblObjectif.setText(String.format(" %d Km", objectif.getObjectifCourrent()));
         startStop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             LatLng pos;
 
@@ -227,7 +227,7 @@ public class Bike extends Fragment implements OnMapReadyCallback {
                         .formatDecimal(course.getVitesse()), getString(R.string.unite_vitesse)));
                 lastKnownPos = newPos;
                 nbp.setProgress(Utils.getInstance().calculerPourcentageFini(course.getDistanteParcourue()
-                        , objectif.getOBJECTIF_DISTANCE()));
+                        , objectif.getObjectifCourrent()));
             }
         }
     }

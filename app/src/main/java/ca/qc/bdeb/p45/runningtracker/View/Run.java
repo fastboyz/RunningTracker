@@ -141,7 +141,7 @@ public class Run extends Fragment implements OnMapReadyCallback {
         distanceVoyager = (TextView) getActivity().findViewById(R.id.MainActivity_traveled);
         distanceVoyager.setText("0.00 Km");
         lblObjectif = (TextView) getActivity().findViewById(R.id.MainActivity_objective);
-        lblObjectif.setText(String.format(" %d Km", objectif.getOBJECTIF_DISTANCE()));
+        lblObjectif.setText(String.format(" %d Km", objectif.getObjectifCourrent()));
         speed = (TextView) getActivity().findViewById(R.id.MainActivity_Speed);
         startStop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             LatLng pos;
@@ -154,7 +154,7 @@ public class Run extends Fragment implements OnMapReadyCallback {
                         distanceVoyager.setText(R.string.distanceVoyagerInitiale);
                     }
                     course = new Course();
-                    course.setObjectif(DBHelper.getInstance(getActivity()).getCurrentObjectif().getOBJECTIF_DISTANCE());
+                    course.setObjectif(DBHelper.getInstance(getActivity()).getCurrentObjectif().getObjectifCourrent());
                     course.setCourse_type(Utils.COURSE_TYPE.PIEDS);
                     chronometre.setBase(SystemClock.elapsedRealtime());
                     chronometre.start();
@@ -201,7 +201,7 @@ public class Run extends Fragment implements OnMapReadyCallback {
                         .formatDecimal(course.getVitesse()), getString(R.string.unite_vitesse)));
                 lastKnownPos = newPos;
                 nbp.setProgress(Utils.getInstance().calculerPourcentageFini(course.getDistanteParcourue()
-                        , objectif.getOBJECTIF_DISTANCE()));
+                        , objectif.getObjectifCourrent()));
             }
         }
     }

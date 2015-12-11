@@ -40,7 +40,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/NouvelObjectif_TextView_DistanceInitial"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
@@ -62,7 +62,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/NouvelObjectif_TextView_DistanceFinal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
@@ -77,16 +77,15 @@
             android:id="@+id/textView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:text="Date de fin :"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_gravity="left|center_vertical" />
         <TextView
-            android:id="@+id/textView14"
+            android:id="@+id/NouvelObjectf_textView_Date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="Dec. 12 2014"
+            android:layout_weight="1"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_gravity="left|center_vertical" />
 
@@ -99,12 +98,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="showDatePickerDialog"
-            android:text="Pick date" />
+            android:text="Pick date"
+            android:id="@+id/NouvelObjectif_boutton_PickDate" />
     </TableRow>
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1" />
+
     <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
+        android:id="@+id/NouvelObjectf_Bouton_Save"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_weight="0"
