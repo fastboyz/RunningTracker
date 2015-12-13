@@ -37,7 +37,7 @@
     <string name="titre_distance_totale">Total distance : </string>
     <string name="titre_nbr_cal">Total number of calories burned :</string>
     <string name="titre_nbr_pas">Total number of steps :</string>
-    <string name="titre_nbr_pied">Number of Running :</string>
+    <string name="titre_nbr_pied">Number of running race :</string>
     <string name="titre_nbr_velo">Number of bike race :</string>
     <string name="progression">Progress</string>
 </resources>
