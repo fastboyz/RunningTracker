@@ -62,4 +62,7 @@
     <string name="titre_nbr_pas">Nombre total de pas :</string>
     <string name="titre_nbr_cal">Nombre total de calories brulée :</string>
     <string name="progression">Progression</string>
+    <string name="share_telechargement">Je viens de télécharger la super application \"Run Tracker\"!</string>
+    <string name="share_debut">J\'ai parcouru</string>
+    <string name="share_fin">Km à l\'aide de la super application \"Run Tracker\"!</string>
 </resources>

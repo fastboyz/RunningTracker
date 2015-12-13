@@ -22,6 +22,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
 import ca.qc.bdeb.p45.runningtracker.BD.DBHelper;
+import ca.qc.bdeb.p45.runningtracker.Common.Utils;
 import ca.qc.bdeb.p45.runningtracker.R;
 
 public class MainActivity extends AppCompatActivity
@@ -113,12 +114,11 @@ public class MainActivity extends AppCompatActivity
             shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
             shareIntent.setType("*/*");
             if (DBHelper.getInstance(this).getLastRunDistance() != -1) {
-                shareIntent.putExtra(Intent.EXTRA_TEXT, "J'ai parcourue "
-                        + DBHelper.getInstance(this).getLastRunDistance()
-                        + " Km a l'aide de la super application \"Run Tracker\"");
+                shareIntent.putExtra(Intent.EXTRA_TEXT,  getString(R.string.share_debut) + " "
+                        + Utils.round(DBHelper.getInstance(this).getLastRunDistance(), 2)
+                        + " " + getString(R.string.share_fin));
             } else {
-                shareIntent.putExtra(Intent.EXTRA_TEXT, "Je vient de télécharger la super " +
-                        "application \"Run Tracker\"!!!");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_telechargement));
             }
             startActivity(Intent.createChooser(shareIntent, "Partager avec"));
         }

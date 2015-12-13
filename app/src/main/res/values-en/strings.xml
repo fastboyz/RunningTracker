@@ -40,4 +40,7 @@
     <string name="titre_nbr_pied">Number of running race :</string>
     <string name="titre_nbr_velo">Number of bike race :</string>
     <string name="progression">Progress</string>
+    <string name="share_telechargement">I just downloaded the super app \"Run Tracker\"!</string>
+    <string name="share_debut">I traveled</string>
+    <string name="share_fin">Km using the super application \"Run Tracker \"!</string>
 </resources>
