@@ -155,7 +155,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COURSE_DISTANCE_OBJECTIF, course.getObjectif());
         values.put(COURSE_NBR_PAS, course.getNbrPas());
         values.put(COURSE_DATE, course.getDate().getTime());
-        values.put(COURSE_TYPE, course.getCourse_type().getVALEUR());
+        values.put(COURSE_TYPE, course.getCourse_type().ordinal());
         values.put(COURSE_TEMPS, course.getTempsEcouler());
         values.put(COURSE_CALORIES, course.getCalories());
         long id = db.insert(TABLE_NOM_COURSE, null, values);
@@ -171,7 +171,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COURSE_VITESSE, course.getVitesse());
         values.put(COURSE_TEMPS, course.getTempsEcouler());
         values.put(COURSE_CALORIES, course.getCalories());
-        values.put(COURSE_TYPE, course.getCourse_type().getVALEUR());
+        values.put(COURSE_TYPE, course.getCourse_type().ordinal());
 
         long id = db.insert(TABLE_NOM_COURSE, null, values);
         db.close();
@@ -257,13 +257,13 @@ public class DBHelper extends SQLiteOpenHelper {
             cursor.moveToFirst();
             do {
                 Course course = new Course();
-                // TO DO: maitre le bon type de course
-                course.setCourse_type(Utils.COURSE_TYPE.PIEDS);
+                course.setCourse_type(Utils.COURSE_TYPE.values()[cursor.getInt(6)]);
                 course.ajouterDistance(cursor.getDouble(1));
                 course.setObjectif(cursor.getDouble(3));
                 course.setNbrPas(cursor.getInt(4));
                 course.setDate(new Date(cursor.getLong(5)));
-                course.setTempsEcouler(cursor.getDouble(7));
+                course.setCalories(cursor.getDouble(7));
+                course.setTempsEcouler(cursor.getDouble(8));
                 listCourse.add(course);
             } while (cursor.moveToNext());
         }

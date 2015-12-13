@@ -7,6 +7,6 @@ public class Commons {
     // pour ne pas pouvoir instancifier la classe
     private  Commons() {
     }
-    public static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
+    public static final int NBS_DE_PAS_MOYEN_PAR_KM = 1381;
     public static final double POIDS_MOYEN = 175.2;
 }

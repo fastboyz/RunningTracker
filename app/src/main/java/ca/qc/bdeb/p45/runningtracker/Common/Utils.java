@@ -75,4 +75,11 @@ public class Utils {
         }
         return cal;
     }
+
+    public int calculerNombreDePas(double distanceParcourue){
+
+        int nbsPas = (int) (Commons.NBS_DE_PAS_MOYEN_PAR_KM * distanceParcourue);
+
+        return nbsPas;
+    }
 }

@@ -167,12 +167,12 @@ public class Bike extends Fragment implements OnMapReadyCallback {
         //chronometre.setFormat("MM:SS");
         ToggleButton startStop = (ToggleButton) getActivity().findViewById(R.id.BikeFragment_btnStartStop);
         distanceVoyager = (TextView) getActivity().findViewById(R.id.MainActivity_traveled_bike);
-        distanceVoyager.setText("0.00 Km");
+        distanceVoyager.setText(R.string.distance_initial);
         speed = (TextView) getActivity().findViewById(R.id.MainActivity_Speed_bike);
         lblObjectif = (TextView) getActivity().findViewById(R.id.MainActivity_objective_bike);
         lblObjectif.setText(String.format(" %d Km", objectif.getObjectifCourrent()));
         calories = (TextView) getActivity().findViewById(R.id.MainActivity_CaloriesBrule_bike);
-        calories.setText("0");
+        calories.setText(R.string.zero_initial);
         startStop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             LatLng pos;
 

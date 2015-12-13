@@ -101,6 +101,7 @@ public class Course {
         return nbrPas;
     }
 
+
     public void setObjectif(double objectif) {
         this.objectif = objectif;
     }

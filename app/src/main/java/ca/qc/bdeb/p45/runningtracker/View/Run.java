@@ -62,6 +62,7 @@ public class Run extends Fragment implements OnMapReadyCallback {
     private TextView lblObjectif;
     private Objectif objectif;
     private TextView calories;
+    private TextView podometre;
     NumberProgressBar nbp;
 
     private OnFragmentInteractionListener mListener;
@@ -140,11 +141,13 @@ public class Run extends Fragment implements OnMapReadyCallback {
         //chronometre.setFormat("MM:SS");
         ToggleButton startStop = (ToggleButton) getActivity().findViewById(R.id.MainActivity_btnStartStop);
         distanceVoyager = (TextView) getActivity().findViewById(R.id.MainActivity_traveled);
-        distanceVoyager.setText("0.00 Km");
+        distanceVoyager.setText(R.string.distance_initial);
         lblObjectif = (TextView) getActivity().findViewById(R.id.MainActivity_objective);
         lblObjectif.setText(String.format(" %d Km", objectif.getObjectifCourrent()));
         calories = (TextView) getActivity().findViewById(R.id.MainActivity_CaloriesBrule);
-        calories.setText("0");
+        calories.setText(R.string.zero_initial);
+        podometre = (TextView) getActivity().findViewById(R.id.MainActivity_podo);
+        podometre.setText(R.string.zero_initial);
         speed = (TextView) getActivity().findViewById(R.id.MainActivity_Speed);
         startStop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             LatLng pos;
@@ -206,6 +209,8 @@ public class Run extends Fragment implements OnMapReadyCallback {
                 lastKnownPos = newPos;
                 course.setCalories(Utils.getInstance().calculerCaloriesBruler(course));
                 calories.setText(Utils.getInstance().formatDecimal(course.getCalories()));
+                course.setNbrPas(Utils.getInstance().calculerNombreDePas(course.getDistanteParcourue()));
+                podometre.setText(String.valueOf(course.getNbrPas()));
                 nbp.setProgress(Utils.getInstance().calculerPourcentageFini(course.getDistanteParcourue()
                         , objectif.getObjectifCourrent()));
             }
