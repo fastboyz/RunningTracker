@@ -35,6 +35,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String COURSE_DATE = "DATE";
     private static final String COURSE_TEMPS = "TEMPS";
     private static final String COURSE_TYPE = "TYPE";
+    private static final String COURSE_CALORIES = "BURNED_CALORIES";
 
     private static final String TABLE_NOM_OBJECTIF = "OBJECTIF";
     // Noms de colonnes
@@ -69,6 +70,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 + COURSE_NBR_PAS + " INTEGER, "
                 + COURSE_DATE + " LONG, "
                 + COURSE_TYPE + " INTEGER, "
+                + COURSE_CALORIES + " DOUBLE, "
                 + COURSE_TEMPS + " LONG)";
         db.execSQL(sqlClient);
 
@@ -142,6 +144,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COURSE_DATE, 0);
         values.put(COURSE_TYPE, 0);
         values.put(COURSE_TEMPS, 0);
+        values.put(COURSE_CALORIES, 0.0);
         long id = db.insert(TABLE_NOM_COURSE, null, values);
     }
 
@@ -154,6 +157,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COURSE_DATE, course.getDate().getTime());
         values.put(COURSE_TYPE, course.getCourse_type().getVALEUR());
         values.put(COURSE_TEMPS, course.getTempsEcouler());
+        values.put(COURSE_CALORIES, course.getCalories());
         long id = db.insert(TABLE_NOM_COURSE, null, values);
     }
 
@@ -166,6 +170,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COURSE_DISTANCE_OBJECTIF, course.getObjectif());
         values.put(COURSE_VITESSE, course.getVitesse());
         values.put(COURSE_TEMPS, course.getTempsEcouler());
+        values.put(COURSE_CALORIES, course.getCalories());
         values.put(COURSE_TYPE, course.getCourse_type().getVALEUR());
 
         long id = db.insert(TABLE_NOM_COURSE, null, values);

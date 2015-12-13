@@ -8,4 +8,5 @@ public class Commons {
     private  Commons() {
     }
     public static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
+    public static final double POIDS_MOYEN = 175.2;
 }

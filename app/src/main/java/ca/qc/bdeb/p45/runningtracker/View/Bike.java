@@ -61,6 +61,7 @@ public class Bike extends Fragment implements OnMapReadyCallback {
     private TextView lblObjectif;
     private DBHelper helper;
     private  Objectif objectif;
+    private TextView calories;
     NumberProgressBar nbp;
 
     private OnFragmentInteractionListener mListener;
@@ -148,7 +149,7 @@ public class Bike extends Fragment implements OnMapReadyCallback {
         LatLng position;
         if (location != null) {
             position = new LatLng(location.getLatitude(), location.getLongitude());
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, 14.85f));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, 15.85f));
         } else {
             Toast.makeText(getContext(), "GPS Fermer", Toast.LENGTH_SHORT).show();
         }
@@ -170,6 +171,8 @@ public class Bike extends Fragment implements OnMapReadyCallback {
         speed = (TextView) getActivity().findViewById(R.id.MainActivity_Speed_bike);
         lblObjectif = (TextView) getActivity().findViewById(R.id.MainActivity_objective_bike);
         lblObjectif.setText(String.format(" %d Km", objectif.getObjectifCourrent()));
+        calories = (TextView) getActivity().findViewById(R.id.MainActivity_CaloriesBrule_bike);
+        calories.setText("0");
         startStop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             LatLng pos;
 
@@ -195,6 +198,7 @@ public class Bike extends Fragment implements OnMapReadyCallback {
                     course.changeState();
                     chronometre.stop();
                     course.setTempsEcouler(SystemClock.elapsedRealtime() - chronometre.getBase());
+                    course.setCalories(Utils.getInstance().calculerCaloriesBruler(course));
                     helper.ajouterCourse(course);
                 }
             }
@@ -226,6 +230,8 @@ public class Bike extends Fragment implements OnMapReadyCallback {
                 speed.setText(String.format("%s%s", Utils.getInstance()
                         .formatDecimal(course.getVitesse()), getString(R.string.unite_vitesse)));
                 lastKnownPos = newPos;
+                course.setCalories(Utils.getInstance().calculerCaloriesBruler(course));
+                calories.setText(Utils.getInstance().formatDecimal(course.getCalories()));
                 nbp.setProgress(Utils.getInstance().calculerPourcentageFini(course.getDistanteParcourue()
                         , objectif.getObjectifCourrent()));
             }

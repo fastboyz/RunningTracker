@@ -15,6 +15,16 @@ public class Course {
     private Date date;
     private int nbrPas;
     private double vitesse;
+    private double calories;
+
+    public double getCalories() {
+        return calories;
+    }
+
+    public void setCalories(double calories) {
+        this.calories = calories;
+    }
+
     private Utils.COURSE_TYPE course_type;
 
     public double getTempsEcouler() {
