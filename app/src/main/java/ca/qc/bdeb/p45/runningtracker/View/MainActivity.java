@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.Menu_bike) {
             fragmentClass = Bike.class;
         } else if (id == R.id.Menu_historique) {
-
+            fragmentClass = CousreHistoriqueFragment.class;
         } else if ( id == R.id.Menu_objectif) {
             fragmentClass = ObjectifFragment.class;
         } else if (id == R.id.Menu_Statistique) {
@@ -110,9 +110,14 @@ public class MainActivity extends AppCompatActivity
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
             shareIntent.setType("*/*");
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "J'ai parcourue "
-                    + DBHelper.getInstance(this).getLastRunDistance()
-                    + " Km a l'aide de la super application \"Run Tracker\"");
+            if (DBHelper.getInstance(this).getLastRunDistance() != -1) {
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "J'ai parcourue "
+                        + DBHelper.getInstance(this).getLastRunDistance()
+                        + " Km a l'aide de la super application \"Run Tracker\"");
+            } else {
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "Je vient de télécharger la super " +
+                        "application \"Run Tracker\"!!!");
+            }
             startActivity(Intent.createChooser(shareIntent, "Partager avec"));
         }
 

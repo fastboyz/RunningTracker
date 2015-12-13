@@ -10,7 +10,7 @@ import ca.qc.bdeb.p45.runningtracker.Common.Utils;
  */
 public class Course {
     private double distanteParcourue;
-    private double tempsEcouler;
+    private long tempsEcouler;
     private double objectif;
     private Date date;
     private int nbrPas;
@@ -27,11 +27,11 @@ public class Course {
 
     private Utils.COURSE_TYPE course_type;
 
-    public double getTempsEcouler() {
+    public long getTempsEcouler() {
         return tempsEcouler;
     }
 
-    public void setTempsEcouler(double tempsEcouler) {
+    public void setTempsEcouler(long tempsEcouler) {
         this.tempsEcouler = tempsEcouler;
     }
 
@@ -41,7 +41,7 @@ public class Course {
         distanteParcourue = distanteParcourue + distance;
     }
 
-    public Course(double distanteParcourue, double objectif, double tempsEcouler, Date date, int nbrPas, double vitesse, Utils.COURSE_TYPE course_type) {
+    public Course(double distanteParcourue, double objectif, long tempsEcouler, Date date, int nbrPas, double vitesse, Utils.COURSE_TYPE course_type) {
         this.distanteParcourue = distanteParcourue;
         this.objectif = objectif;
         this.tempsEcouler = tempsEcouler;

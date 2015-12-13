@@ -18,6 +18,7 @@ import org.eazegraph.lib.models.ValueLineSeries;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import ca.qc.bdeb.p45.runningtracker.BD.DBHelper;
 import ca.qc.bdeb.p45.runningtracker.R;
@@ -173,7 +174,8 @@ public class Statistiques extends Fragment {
         vitesse.setChecked(false);
         for (int i = 6; i >= 0; i--) {
             SimpleDateFormat dt = new SimpleDateFormat("MMM d");
-            Date date = new Date(System.currentTimeMillis() - (i * (24 * 60 * 60 * 1000)));
+            long timetoPast = System.currentTimeMillis() - (i * (24l * 60l * 60l * 1000l));
+            Date date = new Date(timetoPast);
             mBarChart.addBar(new BarModel(dt.format(date), (float) db.getAllStatsInOneDay(date).getDistanteParcourue(), 0xFF123456));
         }
         mBarChart.startAnimation();
@@ -182,7 +184,8 @@ public class Statistiques extends Fragment {
         series.setColor(0xFF56B7F1);
         for (int i = 30; i >= 0; i--) {
             SimpleDateFormat dt = new SimpleDateFormat("MMM d");
-            Date date = new Date(System.currentTimeMillis() - (i * (24 * 60 * 60 * 1000)));
+            long timetoPast = System.currentTimeMillis() - (i * (24l * 60l * 60l * 1000l));
+            Date date = new Date(timetoPast);
             series.addPoint(new ValueLinePoint(dt.format(date), (float) db.getAllStatsInOneDay(date).getDistanteParcourue()));
         }
         mCubicValueLineChart.addSeries(series);
@@ -197,7 +200,8 @@ public class Statistiques extends Fragment {
         vitesse.setChecked(true);
         for (int i = 6; i >= 0; i--) {
             SimpleDateFormat dt = new SimpleDateFormat("MMM d");
-            Date date = new Date(System.currentTimeMillis() - (i * (24 * 60 * 60 * 1000)));
+            long timetoPast = System.currentTimeMillis() - (i * (24l * 60l * 60l * 1000l));
+            Date date = new Date(timetoPast);
             mBarChart.addBar(new BarModel(dt.format(date), (float) db.getAllStatsInOneDay(date).getVitesse(), 0xFF123456));
         }
         mBarChart.startAnimation();
@@ -206,7 +210,8 @@ public class Statistiques extends Fragment {
         series.setColor(0xFF56B7F1);
         for (int i = 30; i >= 0; i--) {
             SimpleDateFormat dt = new SimpleDateFormat("MMM d");
-            Date date = new Date(System.currentTimeMillis() - (i * (24 * 60 * 60 * 1000)));
+            long timetoPast = System.currentTimeMillis() - (i * (24l * 60l * 60l * 1000l));
+            Date date = new Date(timetoPast);
             series.addPoint(new ValueLinePoint(dt.format(date), (float) db.getAllStatsInOneDay(date).getVitesse()));
         }
         mCubicValueLineChart.addSeries(series);
@@ -221,16 +226,18 @@ public class Statistiques extends Fragment {
         vitesse.setChecked(false);
         for (int i = 6; i >= 0; i--) {
             SimpleDateFormat dt = new SimpleDateFormat("MMM d");
-            Date date = new Date(System.currentTimeMillis() - (i * (24 * 60 * 60 * 1000)));
-            mBarChart.addBar(new BarModel(dt.format(date), (float) (db.getAllStatsInOneDay(date).getTempsEcouler()/(60*100)), 0xFF123456));
+            long timetoPast = System.currentTimeMillis() - (i * (24l * 60l * 60l * 1000l));
+            Date date = new Date(timetoPast);
+            mBarChart.addBar(new BarModel(dt.format(date), (float)(TimeUnit.MILLISECONDS.toMinutes(db.getAllStatsInOneDay(date).getTempsEcouler())), 0xFF123456));
         }
         mBarChart.startAnimation();
         mCubicValueLineChart = (ValueLineChart) getActivity().findViewById(R.id.cubiclinechart);
         ValueLineSeries series = new ValueLineSeries();
         series.setColor(0xFF56B7F1);
-        for (int i = 30; i >= 0; i--) {
+        for (long i = 30; i >= 0; i--) {
             SimpleDateFormat dt = new SimpleDateFormat("MMM d");
-            Date date = new Date(System.currentTimeMillis() - (i * (24 * 60 * 60 * 1000)));
+            long timetoPast = System.currentTimeMillis() - (i * (24l * 60l * 60l * 1000l));
+            Date date = new Date(timetoPast);
             series.addPoint(new ValueLinePoint(dt.format(date), (float) (db.getAllStatsInOneDay(date).getTempsEcouler()/(60*100))));
         }
         mCubicValueLineChart.addSeries(series);

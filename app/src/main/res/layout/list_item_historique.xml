@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Objectif"
+                android:id="@+id/ListItemHistrique_TextView_Objectif"
+                android:layout_gravity="center_horizontal" />
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/ListItemHistrique_ImageView_ObjectifSucceded"
+                android:src="@android:drawable/ic_delete"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0.0 Km"
+            android:id="@+id/ListItemHistrique_TextView_Distance"
+            android:layout_weight="1"
+            android:gravity="center_vertical|center_horizontal" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/ListItemHistrique_ImageView_TypeCourse"
+            android:src="@drawable/ic_bicycle"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="10-12-2015"
+            android:id="@+id/ListItemHistrique_TextView_Date"
+            android:layout_weight="1"
+            android:gravity="center_vertical|center_horizontal"
+            android:maxLines="1"
+            android:textIsSelectable="false"
+            android:textSize="16dp" />
+    </TableRow>
+</LinearLayout>

@@ -55,4 +55,5 @@
     <string name="hello_world">Hello world!</string>
     <string name="zero_initial">0</string>
     <string name="distance_initial">0.00 Km</string>
+    <string name="distance_final">Distance final</string>
 </resources>

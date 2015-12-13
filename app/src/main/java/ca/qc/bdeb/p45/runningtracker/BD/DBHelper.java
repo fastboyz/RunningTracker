@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import ca.qc.bdeb.p45.runningtracker.Common.Utils;
 import ca.qc.bdeb.p45.runningtracker.Modele.Course;
@@ -83,17 +84,17 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(sqlClient);
 
         creerObjectifInitial(db);
-        creerCourseInitial(db);
 
         // Création de donné test durant la semaine passé
+        Random random = new Random();
         for (int i = 6; i >= 0; i--) {
-            Random random = new Random();
-            creerCourseTest(db, new Course(6.2 * (random.nextInt(5) + 1) * 0.1, 5 * (random.nextInt(5) + 1) * 0.1, 154.25 * (random.nextInt(5) + 1) * 0.1,
+            int nombreKilometre = random.nextInt(5) + 1;
+            creerCourseTest(db, new Course(nombreKilometre, 3, TimeUnit.MINUTES.toMillis(nombreKilometre * (10 + random.nextInt(4)+1)),
                     new Date(System.currentTimeMillis() - (i * (24 * 60 * 60 * 1000))), 666, 5.3,
                     Utils.COURSE_TYPE.PIEDS));
         }
-        creerCourseTest(db, new Course(6.2, 5, 154.25, new Date(System.currentTimeMillis()), 666,
-                5.3, Utils.COURSE_TYPE.PIEDS));
+        creerCourseTest(db, new Course(3, 3, TimeUnit.MINUTES.toMillis(3 * (10 + random.nextInt(2))),
+                new Date(System.currentTimeMillis()), 666, 5.3, Utils.COURSE_TYPE.PIEDS));
     }
 
     @Override
@@ -113,14 +114,14 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Course course = new Course();
         Cursor cursor = db.rawQuery("select * from " + TABLE_NOM_COURSE + " where " + COURSE_DATE
-                + " > "+ minDate.getTime() + " AND " + COURSE_DATE
-                + " < "+ maxDate.getTime() + ";", null);
+                + " > " + minDate.getTime() + " AND " + COURSE_DATE
+                + " < " + maxDate.getTime() + ";", null);
 
-        if (cursor != null && cursor.getCount()!=0) {
+        if (cursor != null && cursor.getCount() != 0) {
             cursor.moveToFirst();
             do {
                 course.ajouterDistance(cursor.getDouble(1));
-                course.setTempsEcouler(course.getTempsEcouler() + cursor.getDouble(7));
+                course.setTempsEcouler(course.getTempsEcouler() + cursor.getLong(8));
             } while (cursor.moveToNext());
         }
         return course;
@@ -130,22 +131,9 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(OBJECTIF_INITIALE, 5);
         values.put(OBJECTIF_FINALE, 42);
-        values.put(OBJECTIF_DATE_FINAL, new Date().getTime()+ (6*(24 * 60 * 60 * 1000)));
+        values.put(OBJECTIF_DATE_FINAL, new Date().getTime() + (6 * (24 * 60 * 60 * 1000)));
         values.put(OBJECTIF_DATE_COMMENCEMENT, new Date().getTime());
         long id = db.insert(TABLE_NOM_OBJECTIF, null, values);
-    }
-
-    public void creerCourseInitial(SQLiteDatabase db) {
-        ContentValues values = new ContentValues();
-        values.put(COURSE_DISTANCE, 0);
-        values.put(COURSE_VITESSE, 0);
-        values.put(COURSE_DISTANCE_OBJECTIF, 0);
-        values.put(COURSE_NBR_PAS, 0);
-        values.put(COURSE_DATE, 0);
-        values.put(COURSE_TYPE, 0);
-        values.put(COURSE_TEMPS, 0);
-        values.put(COURSE_CALORIES, 0.0);
-        long id = db.insert(TABLE_NOM_COURSE, null, values);
     }
 
     public void creerCourseTest(SQLiteDatabase db, Course course) {
@@ -194,15 +182,19 @@ public class DBHelper extends SQLiteOpenHelper {
                 + TABLE_NOM_COURSE + " where " + COURSE_DISTANCE + " > "
                 + COURSE_DISTANCE_OBJECTIF + ";", null);
         long numRows = DatabaseUtils.queryNumEntries(db, TABLE_NOM_COURSE);
-        float pourcentage = (nbrObjectifRéussi*100)/numRows;
-        return pourcentage;
+        if (numRows != 0) {
+            float pourcentage = (nbrObjectifRéussi * 100) / numRows;
+            return pourcentage;
+        } else {
+            return 100;
+        }
     }
 
     public double getLastRunDistance() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_NOM_COURSE + " where " + COURSE_ID
                 + " = (SELECT MAX(" + COURSE_ID + ") FROM " + TABLE_NOM_COURSE + ")" + ";", null);
-        if (cursor != null) {
+        if (cursor != null && cursor.getCount() != 0) {
             cursor.moveToFirst();
             return cursor.getDouble(1);
         } else {
@@ -229,7 +221,7 @@ public class DBHelper extends SQLiteOpenHelper {
             diffTime = todayTime - startTime;
             long diffDaysToday = diffTime / (1000 * 60 * 60 * 24);
             double diffDistance = distanceFinal - initial;
-            double distanceParJour = diffDistance/diffDaysTotal;
+            double distanceParJour = diffDistance / diffDaysTotal;
             if (diffDaysTotal > diffDaysToday) {
                 objectif.setObjectifCourrent((int) (initial + (distanceParJour * diffDaysToday)));
             } else {
@@ -237,23 +229,18 @@ public class DBHelper extends SQLiteOpenHelper {
             }
             objectif.setObjectifFinale(distanceFinal);
         }
-//        + OBJECTIF_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-//                + OBJECTIF_INITIALE + " REAL, "
-//                + OBJECTIF_FINALE + " REAL, "
-//                + OBJECTIF_DATE_FINAL + " LONG, "
-//                + OBJECTIF_DATE_COMMENCEMENT + " LONG)";
         return objectif;
     }
 
-    public ArrayList<Course> getLasMonthRuns() {
+    public ArrayList<Course> getAllRuns() {
         Date lastMonth = new Date();
         lastMonth.setMonth(lastMonth.getMonth() - 1);
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Course> listCourse = new ArrayList<Course>();
-        Cursor cursor = db.rawQuery("select * from " + TABLE_NOM_COURSE + " where " + COURSE_DATE
-                + " > " + lastMonth.getTime() + " ORDER BY " + COURSE_DATE + " ;", null);
+        Cursor cursor = db.rawQuery("select * from " + TABLE_NOM_COURSE + " ORDER BY " +
+                COURSE_DATE + " ;", null);
 
-        if (cursor != null) {
+        if (cursor != null && cursor.getCount()!=0) {
             cursor.moveToFirst();
             do {
                 Course course = new Course();
@@ -263,7 +250,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 course.setNbrPas(cursor.getInt(4));
                 course.setDate(new Date(cursor.getLong(5)));
                 course.setCalories(cursor.getDouble(7));
-                course.setTempsEcouler(cursor.getDouble(8));
+                course.setTempsEcouler(cursor.getLong(8));
                 listCourse.add(course);
             } while (cursor.moveToNext());
         }

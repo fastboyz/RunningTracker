@@ -43,7 +43,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/cubiclinechart"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="180dp"
         app:egUseCubic="true"
         app:egUseOverlapFill="true"
         app:egCurveSmoothness="0.4"

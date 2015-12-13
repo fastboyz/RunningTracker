@@ -15,7 +15,6 @@
     <string name="stop">Stop</string>
     <string name="communication">Communication</string>
     <string name="Objective">Objectif of </string>
-    <string name="distanceVoyagerInitiale">0 Km</string>
     <string name="hello_blank_fragment">hi</string>
     <string name="Bike">Bicycle</string>
     <string name="objectif_intro">Target of</string>
@@ -33,4 +32,5 @@
     <string name="titre_tableau_Vitesse_mois">Table of running speed during the last month</string>
     <string name="titre_tableau_Temps_semaine">Table of running time during the last week</string>
     <string name="titre_tableau_Temps_mois">Table of running time during the last month</string>
+    <string name="distance_final">Final distance</string>
 </resources>
