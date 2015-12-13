@@ -155,6 +155,7 @@ public class ObjectifFragment extends Fragment {
         SimpleDateFormat dt = new SimpleDateFormat("d MMM yyyy");
         Date dateFinale = db.getCurrentObjectif().getObjectifDateFinal();
         date.setText("" + dt.format(dateFinale));
+        mPieChart.clearChart();
         mPieChart.addPieSlice(new PieModel("Objectifs réussis",
                 (float) objectifReusi,
                 Color.parseColor("#EE7600")));

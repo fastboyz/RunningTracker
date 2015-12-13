@@ -156,7 +156,7 @@ public class Bike extends Fragment implements OnMapReadyCallback {
     }
 
     private void initialise() {
-        helper = DBHelper.getInstance(getContext());
+        helper = DBHelper.getInstance(getActivity());
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById((R.id.map));
         objectif = helper.getCurrentObjectif();
         mapFragment.getMapAsync(this);
@@ -198,7 +198,6 @@ public class Bike extends Fragment implements OnMapReadyCallback {
                     course.changeState();
                     chronometre.stop();
                     course.setTempsEcouler(SystemClock.elapsedRealtime() - chronometre.getBase());
-                    course.setCalories(Utils.getInstance().calculerCaloriesBruler(course));
                     helper.ajouterCourse(course);
                 }
             }
@@ -230,7 +229,6 @@ public class Bike extends Fragment implements OnMapReadyCallback {
                 speed.setText(String.format("%s%s", Utils.getInstance()
                         .formatDecimal(course.getVitesse()), getString(R.string.unite_vitesse)));
                 lastKnownPos = newPos;
-                course.setCalories(Utils.getInstance().calculerCaloriesBruler(course));
                 calories.setText(Utils.getInstance().formatDecimal(course.getCalories()));
                 nbp.setProgress(Utils.getInstance().calculerPourcentageFini(course.getDistanteParcourue()
                         , objectif.getObjectifCourrent()));

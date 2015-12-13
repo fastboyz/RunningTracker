@@ -12,6 +12,8 @@
             android:title="@string/objectif" />
         <item android:id="@+id/Menu_Statistique" android:icon="@android:drawable/ic_menu_sort_by_size"
             android:title="@string/statistiques" />
+        <item android:id="@+id/Menu_Progression" android:icon="@android:drawable/ic_dialog_info"
+            android:title="@string/progression" />
     </group>
 
     <item android:title="@string/communication">

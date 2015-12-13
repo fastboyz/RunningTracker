@@ -106,6 +106,8 @@ public class MainActivity extends AppCompatActivity
             fragmentClass = ObjectifFragment.class;
         } else if (id == R.id.Menu_Statistique) {
             fragmentClass = Statistiques.class;
+        }else if (id == R.id.Menu_Progression) {
+            fragmentClass = ProgressionGenerale.class;
         } else if (id == R.id.nav_share) {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);

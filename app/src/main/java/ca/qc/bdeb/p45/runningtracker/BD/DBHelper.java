@@ -102,6 +102,67 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    public long getNbrCoursePied(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        long resultats = DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM "
+                + TABLE_NOM_COURSE + " where " + COURSE_TYPE + " = "
+                + Utils.COURSE_TYPE.PIEDS.ordinal() + ";", null);
+        return resultats;
+    }
+
+    public long getNbrPas(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM "
+                + TABLE_NOM_COURSE + " where " + COURSE_TYPE + " = "
+                + Utils.COURSE_TYPE.PIEDS.ordinal() + ";", null);
+        long resultat = 0;
+        if (cursor != null && cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            do {
+                resultat += cursor.getLong(4);
+            } while (cursor.moveToNext());
+        }
+
+        return resultat;
+    }
+
+    public long getNbrCal(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM "
+                + TABLE_NOM_COURSE + ";", null);
+        long resultat = 0;
+        if (cursor != null && cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            do {
+                resultat += cursor.getDouble(7);
+            } while (cursor.moveToNext());
+        }
+
+        return resultat;
+    }
+
+    public long getDistanceTotal(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM "
+                + TABLE_NOM_COURSE + ";", null);
+        long resultat = 0;
+        if (cursor != null && cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            do {
+                resultat += cursor.getDouble(1);
+            } while (cursor.moveToNext());
+        }
+        return resultat;
+    }
+
+    public long getNbrCourseVelo(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        long resultats = DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM "
+                + TABLE_NOM_COURSE + " where " + COURSE_TYPE + " = "
+                + Utils.COURSE_TYPE.VELO.ordinal() + ";", null);
+        return resultats;
+    }
+
     public Course getAllStatsInOneDay(Date date) {
         date.setHours(0);
         date.setMinutes(0);
@@ -233,12 +294,9 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Course> getAllRuns() {
-        Date lastMonth = new Date();
-        lastMonth.setMonth(lastMonth.getMonth() - 1);
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Course> listCourse = new ArrayList<Course>();
-        Cursor cursor = db.rawQuery("select * from " + TABLE_NOM_COURSE + " ORDER BY " +
-                COURSE_DATE + " ;", null);
+        Cursor cursor = db.rawQuery("select * from " + TABLE_NOM_COURSE + " ;", null);
 
         if (cursor != null && cursor.getCount()!=0) {
             cursor.moveToFirst();

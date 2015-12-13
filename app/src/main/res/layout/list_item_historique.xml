@@ -43,7 +43,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/ListItemHistrique_ImageView_TypeCourse"
-            android:src="@drawable/ic_bicycle"
+            android:src="@drawable/ic_bicycle_deux"
             android:layout_weight="1" />
 
         <TextView

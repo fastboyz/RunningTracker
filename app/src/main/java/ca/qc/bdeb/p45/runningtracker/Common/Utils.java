@@ -66,20 +66,19 @@ public class Utils {
         return 100;
     }
 
-    public double calculerCaloriesBruler(Course course) {
-        double cal = 0.0;
-        if (course.getCourse_type() == COURSE_TYPE.PIEDS) {
-            cal = (1.16 * Commons.POIDS_MOYEN) * course.getDistanteParcourue();
-        } else {
-            cal = ((1.16 * Commons.POIDS_MOYEN) * course.getDistanteParcourue() * 2.9);
-        }
-        return cal;
-    }
-
     public int calculerNombreDePas(double distanceParcourue){
 
         int nbsPas = (int) (Commons.NBS_DE_PAS_MOYEN_PAR_KM * distanceParcourue);
 
         return nbsPas;
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
     }
 }

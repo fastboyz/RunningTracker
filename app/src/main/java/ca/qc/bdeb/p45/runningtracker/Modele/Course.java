@@ -2,6 +2,8 @@ package ca.qc.bdeb.p45.runningtracker.Modele;
 
 
 import java.util.Date;
+
+import ca.qc.bdeb.p45.runningtracker.Common.Commons;
 import ca.qc.bdeb.p45.runningtracker.Common.StateCourse;
 import ca.qc.bdeb.p45.runningtracker.Common.Utils;
 
@@ -18,7 +20,13 @@ public class Course {
     private double calories;
 
     public double getCalories() {
-        return calories;
+        double cal = 0.0;
+        if (this.course_type == Utils.COURSE_TYPE.PIEDS) {
+            cal = (1.16 * Commons.POIDS_MOYEN) * this.distanteParcourue;
+        } else {
+            cal = ((1.16 * Commons.POIDS_MOYEN) * this.distanteParcourue * 2.9);
+        }
+        return cal;
     }
 
     public void setCalories(double calories) {

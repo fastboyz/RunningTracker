@@ -18,8 +18,8 @@
     <string name="hello_blank_fragment">hi</string>
     <string name="Bike">Bicycle</string>
     <string name="objectif_intro">Target of</string>
-    <string name="titre_tableau_distance_mois">Table of distance traveled in the last month</string>
-    <string name="titre_tableau_distance_semaine">Table of distance traveled in the last week</string>
+    <string name="titre_tableau_distance_mois">Table of distance traveled in the last month (Km)</string>
+    <string name="titre_tableau_distance_semaine">Table of distance traveled in the last week (Km)</string>
     <string name="date_final">Final date</string>
     <string name="distance">Distance</string>
     <string name="legende_objectif_echouer">Goal failed</string>
@@ -28,9 +28,16 @@
     <string name="titre_pie_chart_objectif">Table of succeeded goals</string>
     <string name="vitesse">Speed</string>
     <string name="temps">Time</string>
-    <string name="titre_tableau_Vitesse_semaine">Table of running speed during the last week</string>
-    <string name="titre_tableau_Vitesse_mois">Table of running speed during the last month</string>
-    <string name="titre_tableau_Temps_semaine">Table of running time during the last week</string>
-    <string name="titre_tableau_Temps_mois">Table of running time during the last month</string>
+    <string name="titre_tableau_Vitesse_semaine">Table of running speed during the last week (Km/h)</string>
+    <string name="titre_tableau_Vitesse_mois">Table of running speed during the last month (Km/h)</string>
+    <string name="titre_tableau_Temps_semaine">Table of running time during the last week (min)</string>
+    <string name="titre_tableau_Temps_mois">Table of running time during the last month (min)</string>
     <string name="distance_final">Final distance</string>
+    <string name="title_activity_nouvel__objectif">New goal</string>
+    <string name="titre_distance_totale">Total distance : </string>
+    <string name="titre_nbr_cal">Total number of calories burned :</string>
+    <string name="titre_nbr_pas">Total number of steps :</string>
+    <string name="titre_nbr_pied">Number of Running :</string>
+    <string name="titre_nbr_velo">Number of bike race :</string>
+    <string name="progression">Progress</string>
 </resources>

@@ -28,22 +28,22 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_test">Test</string>
-    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_test" translatable="false">Test</string>
+    <string name="section_format" translatable="false">Hello World from section: %1$d</string>
     <string name="communication">Social</string>
     <string name="Bike">Bicyclette</string>
-    <string name="unite_vitesse">Km/h</string>
+    <string name="unite_vitesse" translatable="false">Km/h</string>
     <string name="objectif_intro">Objectif de</string>
-    <string name="titre_tableau_distance_semaine">Tableau des distance parcourue durant la dernière semaine</string>
-    <string name="titre_tableau_distance_mois">Tableau des distance parcourue durant le dernier mois</string>
-    <string name="titre_tableau_Temps_semaine">Tableau des temps de course durant la dernière semaine</string>
-    <string name="titre_tableau_Temps_mois">Tableau des temps de course durant le dernier mois</string>
-    <string name="titre_tableau_Vitesse_semaine">Tableau des vitesse de course durant la dernière semaine</string>
-    <string name="titre_tableau_Vitesse_mois">Tableau des vitesse de course durant le dernier mois</string>
+    <string name="titre_tableau_distance_semaine">Tableau des distance parcourue durant la dernière semaine (Km)</string>
+    <string name="titre_tableau_distance_mois">Tableau des distance parcourue durant le dernier mois (Km)</string>
+    <string name="titre_tableau_Temps_semaine">Tableau des temps de course durant la dernière semaine (min)</string>
+    <string name="titre_tableau_Temps_mois">Tableau des temps de course durant le dernier mois (min)</string>
+    <string name="titre_tableau_Vitesse_semaine">Tableau des vitesse de course durant la dernière semaine (Km/h)</string>
+    <string name="titre_tableau_Vitesse_mois">Tableau des vitesse de course durant le dernier mois (Km/h)</string>
     <string name="distance">Distance</string>
-    <string name="kmdefault">0.0 Km</string>
+    <string name="kmdefault" translatable="false">0.0 Km</string>
     <string name="date_final">Date finale</string>
-    <string name="date_default">Dec 9 2015</string>
+    <string name="date_default" translatable="false">Dec 9 2015</string>
     <string name="nouvel_objectif">Nouvel objectif</string>
     <string name="titre_pie_chart_objectif">Tableau des objectifs réussi</string>
     <string name="legende_objectif_reussi">Objectif réussi</string>
@@ -52,8 +52,14 @@
     <string name="vitesse">Vitesse</string>
     <string name="title_activity_nouvel__objectif">Nouvel_Objectif</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="zero_initial">0</string>
-    <string name="distance_initial">0.00 Km</string>
+    <string name="hello_world" translatable="false">Hello world!</string>
+    <string name="zero_initial" translatable="false">0</string>
+    <string name="distance_initial" translatable="false">0.00 Km</string>
     <string name="distance_final">Distance final</string>
+    <string name="titre_distance_totale">Distance total parcourue :</string>
+    <string name="titre_nbr_pied">Nombre de course à pied :</string>
+    <string name="titre_nbr_velo">Nombre de course à vélo :</string>
+    <string name="titre_nbr_pas">Nombre total de pas :</string>
+    <string name="titre_nbr_cal">Nombre total de calories brulée :</string>
+    <string name="progression">Progression</string>
 </resources>
