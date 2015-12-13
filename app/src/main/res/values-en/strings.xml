@@ -43,4 +43,5 @@
     <string name="share_telechargement">I just downloaded the super app \"Run Tracker\"!</string>
     <string name="share_debut">I traveled</string>
     <string name="share_fin">Km using the super application \"Run Tracker \"!</string>
+    <string name="Erreur">Error</string>
 </resources>

@@ -65,4 +65,5 @@
     <string name="share_telechargement">Je viens de télécharger la super application \"Run Tracker\"!</string>
     <string name="share_debut">J\'ai parcouru</string>
     <string name="share_fin">Km à l\'aide de la super application \"Run Tracker\"!</string>
+    <string name="Erreur">Erreur</string>
 </resources>

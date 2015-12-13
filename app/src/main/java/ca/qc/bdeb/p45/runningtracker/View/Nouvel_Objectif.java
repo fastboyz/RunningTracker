@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -60,19 +61,24 @@ public class Nouvel_Objectif extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Objectif objectif = new Objectif();
-                objectif.setObjectifDateCommencement(new Date());
-                objectif.setObjectifDateFinal(myCalendar.getTime());
-                if (objectifType.isChecked()) {
-                    objectif.setObjectifInitiale(Integer.parseInt(distanceInitial.getText().toString()));
-                    objectif.setObjectifFinale(Integer.parseInt(distanceFinal.getText().toString()));
-                } else {
-                    objectif.setObjectifInitiale(Integer.parseInt(distanceFinal.getText().toString()));
-                    objectif.setObjectifFinale(Integer.parseInt(distanceFinal.getText().toString()));
+                try {
+                    objectif.setObjectifDateCommencement(new Date());
+                    objectif.setObjectifDateFinal(myCalendar.getTime());
+                    if (objectifType.isChecked()) {
+                        objectif.setObjectifInitiale(Integer.parseInt(distanceInitial.getText().toString()));
+                        objectif.setObjectifFinale(Integer.parseInt(distanceFinal.getText().toString()));
+                    } else {
+                        objectif.setObjectifInitiale(Integer.parseInt(distanceFinal.getText().toString()));
+                        objectif.setObjectifFinale(Integer.parseInt(distanceFinal.getText().toString()));
+                    }
+                    db.ajouterObjectif(objectif);
+                    finish();
+                } catch (Exception e){
+                    Toast.makeText(getApplication(), getString(R.string.Erreur), Toast.LENGTH_SHORT).show();
                 }
-                db.ajouterObjectif(objectif);
-                finish();
             }
         });
+        updateLabel();
     }
 
 
